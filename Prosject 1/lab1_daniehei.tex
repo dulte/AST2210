@@ -1,0 +1,127 @@
+\documentclass{emulateapj}
+%\documentclass[12pt,preprint]{aastex}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{epsfig,floatflt}
+
+
+
+\begin{document}
+
+\title{Diffraction and angular resolution}
+
+\author{Daniel Heinesen}
+
+\email{daniel.heinesen@sf-nett.no}
+
+\altaffiltext{1}{Institute of Theoretical Astrophysics, University of
+  Oslo, P.O.\ Box 1029 Blindern, N-0315 Oslo, Norway}
+
+
+%\date{Received - / Accepted -}
+
+\begin{abstract}
+  State problem. Briefly describe method and data. Summarize main results.
+\end{abstract}
+\keywords{cosmic microwave background --- cosmology: observations --- methods: statistical}
+
+\section{Introduction}
+\label{sec:introduction}
+
+Discuss background, physical importance and possibly some history of
+the problem that is being studied in this paper.
+
+
+\section{Method}
+\label{sec:method}
+
+
+Describe method. Define data model and likelihood. Outline how the
+likelihood was computed (grid or MCMC).
+
+Define the power law model in terms of $Q$ and $n$. 
+
+
+\subsection{Single Slit Experiment}
+In this experiment a laser of unknown wavelength was placed on simple platform and aimed at a slit with the width of 100 $\mu m$. The resulting diffraction pattern was projected on a wall, where measurements of the minima were taken. The distance between the minima was found by projecting the diffraction pattern on a piece of white paper and then marking every maxima from the 10th on the left to the 10th on the right with a pencil, and the using a ruler to measure the distance between the 10th maximum and the center on each side, and the distance between the 10th maximum on each side, thus getting 3 different measurement which could be used to get a more accurate result.\\
+
+\textbf{INSERT PICTURE OF SET UP HERE!}
+
+The distance between the slit and the wall was measured with a tape measurer. Due to the flexible nature of the tape measurer, the distance was not measured at a straight line, giving rise to a small uncertainty. It was also difficult to ensure that the measurement was done in a horizontal line, normal to the wall. The set up it self also contributed to the uncertainty of the measurements: to get a consistent distance between the minima the laser had to be normal to the wall, and the slit in the center of the laser beam. \\
+
+The measurement of the distance of the extrema of the diffraction pattern was done quite crude, so both the marking of the maxima on the paper and the measuring with the ruler lead to uncertainty. The extension of the maxima was taken to be half that of the distance between two adjacent maxima. The error in measurement was estimated to at most one quarter that of this distance, giving us quite a large uncertainty. The error of the ruler was determined to insignificant compared to that of the marking, so only that uncertainty was kept.
+
+\subsection{Paper Clip and Anti Slit}
+In this experiment the slit was 
+
+\section{Data}
+\label{sec:data}
+
+Summarize properties of data. Which data are used (experiment,
+frequencies etc.)? Pixel resolution ($N_{\textrm{side}}$),
+$\ell_{\textrm{max}}$ -- everything necessary to repeat the analysis
+for other researchers.
+
+Show a sky map of the smoothed data. Use the Healpix routine
+``smoothing'' to do this; it works just like anafast. Smooth with a
+$7^{\circ}$ beam, and plot with ``map2gif''. Show the RMS pattern as
+well. 
+
+\section{Results}
+\label{sec:results}
+
+
+Show the 2D likelihood contours. Summarize constraints on $Q$ and
+$n$. 
+
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+Summarize results. Discuss their importance, referring to the
+discovery to the initial seeds for structure formation. Mention that
+these results are in good agreement with expectations from
+inflationary theory.
+
+
+
+%\begin{figure}[t]
+%
+%\mbox{\epsfig{figure=filename.eps,width=\linewidth,clip=}}
+%
+%\caption{Description of figure -- explain all elements, but do not
+%draw conclusions here.}
+%\label{fig:figure_label}
+%\end{figure}
+
+
+
+\begin{deluxetable}{lccc}
+%\tablewidth{0pt}
+\tablecaption{\label{tab:results}}
+\tablecomments{Summary of main results.}
+\tablecolumns{4}
+\tablehead{Column 1  & Column 2 & Column 3 & Column 4}
+\startdata
+Item 1 & Item 2 & Item 3 & Item 4
+\enddata
+\end{deluxetable}
+
+
+
+\begin{acknowledgements}
+  Who do you want to thank for helping out with this project?
+\end{acknowledgements}
+
+\begin{thebibliography}{}
+
+\bibitem[G{\'o}rski et al.(1994)]{gorski:1994} G{\'o}rski, K. M.,
+  Hinshaw, G., Banday, A. J., Bennett, C. L., Wright, E. L., Kogut,
+  A., Smoot, G. F., and Lubin, P.\ 1994, ApJL, 430, 89
+
+\end{thebibliography}
+
+
+\end{document}
