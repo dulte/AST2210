@@ -1,6 +1,5 @@
 \documentclass{emulateapj}
 %\documentclass[12pt,preprint]{aastex}
-
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{amsmath}
@@ -45,16 +44,61 @@ Define the power law model in terms of $Q$ and $n$.
 
 
 \subsection{Single Slit Experiment}
-In this experiment a laser of unknown wavelength was placed on simple platform and aimed at a slit with the width of 100 $\mu m$. The resulting diffraction pattern was projected on a wall, where measurements of the minima were taken. The distance between the minima was found by projecting the diffraction pattern on a piece of white paper and then marking every maxima from the 10th on the left to the 10th on the right with a pencil, and the using a ruler to measure the distance between the 10th maximum and the center on each side, and the distance between the 10th maximum on each side, thus getting 3 different measurement which could be used to get a more accurate result.\\
+In this experiment a laser of unknown wavelength, powered by a 4.5 V battery, was placed on simple platform and aimed at a slit with the width of  $a = 100\mu m$. The resulting diffraction pattern was projected on a wall. The distance from the slit to the wall was measured with a tape measurer. The measurements of the maxima were taken. The distance between the maxima was found by projecting the diffraction pattern on a piece of white paper and marking every maxima from the 10th on the left to the 10th on the right with a pencil, and the using a ruler to measure the distance between the 10th maximum and the center on each side, and the distance between the 10th maximum on each side, thus getting 3 different measurement which could be used to get a more accurate result.\\
 
-\textbf{INSERT PICTURE OF SET UP HERE!}
+\textbf{INSERT PICTURE OF SET UP HERE!}\\
 
-The distance between the slit and the wall was measured with a tape measurer. Due to the flexible nature of the tape measurer, the distance was not measured at a straight line, giving rise to a small uncertainty. It was also difficult to ensure that the measurement was done in a horizontal line, normal to the wall. The set up it self also contributed to the uncertainty of the measurements: to get a consistent distance between the minima the laser had to be normal to the wall, and the slit in the center of the laser beam. \\
+\textbf{Kan settes i teori:}
+
+To find the wavelength we use 
+
+\begin{equation}
+\sin \theta_{max} \approx \pm (m+1/2)\frac{\lambda}{a}
+\end{equation}
+
+\subsection{Paper Clip and Anti-Slit}
+In this experiment the slit was replaced with a paper clip with an unknown width. The rest of the setup was more or less identical as with the single slit experiment, but the laser was moved further back due to the small pattern resulting from the diffraction. This movement of the laser gave a further uncertainty due to the tape measurer being to short to measure the whole distance. Two measurements were used, with two different uncertainties.
+
+As with the single slit a white paper was placed behind the diffraction pattern, and the maxima were marked with a pencil. The distance between the 35th on the left and the right of the midpoint was measured with a ruler.
+
+With data the width of the paper clip was the measured.
+
+\subsection{Diffraction by a Circular Aperture}
+For this experiment a laser was shinned into an optic fiber. The fiber was connected to a collimator tube with dampening filter -- so to not destroy the camera. A double lens was placed after the tube, to focus the light. In front of this a microscope objective was placed, which magnified the light 20x. Lastly a monochromatic camera connected to a computer was placed in front of the objective to capture the diffraction pattern.
+
+\textbf{INSERT IMAGE}
+
+The objective had to be placed in the focal point of the lens. The focal point was at a known distance. But to ensure that the beam was focused and was hitting the objective, a piece of white paper was placed in front of the objective. The lens was then adjusted until the beam hit the objective. The paper was then moved back and forward to see if the light was most concentrated at the focal point. 
+
+Having a picture of the Airy pattern the number of pixels to the first minima was simply counted, and knowing the size of each pixel and the distance from the objective and the camera, the angle of the first minima was calculated. From the angle of the first minima, a value for $K$ was calculated.
+ 
+
+\subsection{Uncertainties}
+\subsubsection{Single slit}
+The distance between the slit and the wall was measured with a tape measurer. Due to the flexible nature of the tape measurer, the distance was not measured in a straight line, giving rise to a small uncertainty. A uncertainty of $\pm 0.5 cm$ was added to the distance.
+
+It was also difficult to ensure that the measurement was done in a horizontal line, normal to the wall. The set up it self also contributed to the uncertainty of the measurements: to get a consistent distance between the minima the laser had to be normal to the wall, and the slit in the center of the laser beam. \\
 
 The measurement of the distance of the extrema of the diffraction pattern was done quite crude, so both the marking of the maxima on the paper and the measuring with the ruler lead to uncertainty. The extension of the maxima was taken to be half that of the distance between two adjacent maxima. The error in measurement was estimated to at most one quarter that of this distance, giving us quite a large uncertainty. The error of the ruler was determined to insignificant compared to that of the marking, so only that uncertainty was kept.
 
-\subsection{Paper Clip and Anti Slit}
-In this experiment the slit was 
+To compensate for all these uncertainties, an uncertainty of $\pm 0.1 cm$ was added to the distance to the 10th maxima.
+
+
+\subsubsection{Paper clip}
+The first measurement was from the wall to the table used for the laser and paper clip. Here the same problem as the measurement for the single slit appears, as the tape measurer bends under its own weight, thus measuring a slightly longer distance. 
+
+A second measurement was from the end of the table to the paper clip. Here the tape measurer was place on the table surface, thus there was no bend in the measurer, giving a more precise measurement. 
+
+Since two measurements were done, an uncertainty arose from the difficulty in starting the second measurement where the first ended. So a small uncertainty was added to the second measurement to compensate for this.
+
+Due to the short distance from the paper clip to the wall, the maxima of the diffraction pattern were close together, making the marking of the maxima quite uncertain. This together with uncertainty in the ruler, a certainty of $\pm 0.2 cm$ was added. 
+
+\subsubsection{Diffraction of a Circular Aperture}
+Two measurements was the main sources for uncertainty in this experiment.
+
+The distance between the lens and objective was measured with a ruler, giving a small uncertainty, estimated to be some $\pm 0.5 cm$.
+
+The Airy Disc was contained in very few pixels in the picture. The point of the first minima may be inbetween two pixels, giving an uncertainty of a whole pixel. The center of the Airy disc may also not be in one single pixel, but since the area of the disc is much larger than the point of the minima, this does not contribute so much to the total uncertainty.
 
 \section{Data}
 \label{sec:data}
