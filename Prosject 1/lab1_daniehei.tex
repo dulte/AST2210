@@ -32,6 +32,35 @@
 Discuss background, physical importance and possibly some history of
 the problem that is being studied in this paper.
 
+\section{Theory}
+\label{sec:theory}
+\subsection{Single Slit}
+When the laser hits the single slit the beam interferes with it self and forms a diffraction pattern. The minima of this pattern is given as 
+
+\begin{equation}
+\sin \theta_{\min} = \frac{m\lambda}{a}
+\end{equation}
+
+Where $m$ is the order of the minimum, $a$ is the width of the slit and $\lambda$ being the wave length of the laser. In this paper the maxima for the single slit was used instead of the minima. So instead of the above expression, an approximation for the maxima had to be used:
+
+\begin{equation}
+\sin \theta_{max} \approx \pm (m+1/2)\frac{\lambda}{a}
+\end{equation}\label{eq:slitMax}
+
+An unknown wave length can then be calculated as
+
+\begin{equation}
+\lambda = \sin \theta_{max}\frac{a}{m+1/2} \approx \theta_{max}\frac{a}{m+1/2}
+\end{equation}
+
+\subsection{Paper Clip}
+When the single slit is replaced with a single solid object like a paper clip, a diffraction pattern is still observed, but this time inversed. This is due to Babinet's principle, which states: 
+
+If we add a diffraction pattern made by a object \textit{A} and another diffraction pattern made by the complimentary to \textit{A}, the resulting diffraction pattern is as none of the objects existed.
+
+\textbf{Legg til Referanse her!!!}
+
+
 
 \section{Method}
 \label{sec:method}
@@ -52,9 +81,7 @@ In this experiment a laser of unknown wavelength, powered by a 4.5 V battery, wa
 
 To find the wavelength we use 
 
-\begin{equation}
-\sin \theta_{max} \approx \pm (m+1/2)\frac{\lambda}{a}
-\end{equation}\label{eq:slitMax}
+
 \begin{equation}
 \sin \theta_{max} \approx \pm m\frac{\lambda}{a}
 \end{equation}\label{eq:paperClipMax}
@@ -155,7 +182,7 @@ Measurement done & Measured value & Unit\\
 \hline
 Wave length of laser & $635$ & nm \\
 Distance from lens to objective & $10 \pm 0.5$ & cm\\
-Width of lens & $10.0 \pm 0.2$ & cm\\
+Width of lens & $5.0 \pm 0.2$ & cm\\
 Pixels from center to first minimum & $3 \pm 1$ & px\\
 Size of pixels & $6$ & $\mu$m/px\\
 Magnification & 20x & -\\
@@ -197,11 +224,7 @@ Milky Way to galaxy formation &  4 billion ly & $184 \pm 61.5$ pc
 
 \subsection{Calculation}
 \subsubsection{Single slit}
-The unknown wave length can be calculated as
 
-\begin{equation}
-\lambda = \sin \theta_{max}\frac{a}{m+1/2} \approx \theta_{max}\frac{a}{m+1/2}
-\end{equation}
 
 From the data in \ref{tab:dataSingleSlit} the angle can be estimated as
 
@@ -266,13 +289,13 @@ The angle can be found as
 The value for $K$ can then be calculated as 
 
 \begin{equation}
-K = \frac{9\cdot 10^{-6} \pm 3.005\cdot 10^{-6}}{635}\cdot(1\cdot10^8 \pm 2\cdot10^6)
+K = \frac{9\cdot 10^{-6} \pm 3.005\cdot 10^{-6}}{635}\cdot(5\cdot10^7 \pm 2\cdot10^6)
 \end{equation}
 \begin{equation}
-= 1.417 \pm 0.474
+= 0.71 \pm 0.238
 \end{equation}\label{eq:K}
 
-So the estimated value is $K = 1.417 \pm 0.474$
+So the estimated value is $K = 0.71 \pm 0.238$
 
 \subsubsection{JWST}
 From the above results, mainly \eqref{eq:K} we can find the diffraction limit of the James Webb Space Telescope:
