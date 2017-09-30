@@ -3,6 +3,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{amsmath}
+\usepackage{hyperref}
 \usepackage{epsfig,floatflt}
 \usepackage{pgf,tikz}
 \usepackage{mathrsfs}
@@ -36,13 +37,13 @@ the problem that is being studied in this paper.
 
 If a laser (or some other type of coherent light) is shinned on a narrow opening a diffraction pattern will be observed on the other side. The type of diffraction we are looking at in this paper is Fraunhofer diffraction, which was described first by Joseph von Fraunhofer. We are going to use the diffraction pattern to calculate the unknown wave length of a laser with the use of the extrema of the pattern.
 
-If this narrow opening, the slit, is removed and replaced with a paper clip, an inverted pattern will be created. This pattern is the result of Babinet's principle, first introduced by Jacques Babinet. The principle can be found in section \ref{sec:theoryPaperClip}. We can use the diffraction pattern to find the unknown width the paper clip, again by looking at the extrema of the pattern.
+If this narrow opening, the slit, is removed and replaced with a paper clip, an inverted pattern will be created. This pattern is the result of Babinet's principle, first introduced by Jacques Babinet. The principle can be found in section \ref{sec:theoryPaperClip}. We can use the diffraction pattern to find the unknown width of the paper clip, again by looking at the extrema of the pattern.
 
-The last type of diffraction is Airy diffraction, which is named after George Biddell Airy. This pattern is created when a beam passes through a circular hole. \textbf{Reference} This effect is important in fields like astronomy because this effect limits the resolution of telescopes and other instruments (see section \ref{sec:theoryAiry}). To find this angular resolution, we need to find the empirical constant $K$ (eq \eqref{eq:diffLimit}). This is what we intend to do in this paper.
+The last type of diffraction is Airy diffraction, which is named after George Biddell Airy. This pattern is created when a beam passes through a circular hole. \cite{wiki:Airy} This effect is important in fields like astronomy because this effect limits the resolution of telescopes and other instruments (see section \ref{sec:theoryAiry}). To find this angular resolution, we need to find the empirical constant $K$ (eq \eqref{eq:diffLimit}). This is what we intend to do in this paper.
 
-Finding this constant $K$ is critical for the operation of the James Webb Space Telescope, which is a space telescope created by NASA and intended to launch in 2019\textbf{Reference} . $K$ and therefore the angular resolution is important to how large objects JWST is capable of seeing, and therefore if it is able to succeed in its missions to image exoplanets, observe the most distant of galaxies and much more.
+Finding this constant $K$ is critical for the operation of the James Webb Space Telescope, which is a space telescope created by NASA and intended to launch in 2019 \cite{Jwst} . $K$ and therefore the angular resolution is important to how large objects JWST is capable of seeing, and therefore if it is able to succeed in its missions to image exoplanets, observe the most distant of galaxies and much more.
 
-As an intermission, a light spot in the centre of a circular shadow. This effect is due to Fresnel diffraction.\textbf{Reference}. The Argo spot played an important role in whether light is a particle or a wave, and indicates strongly the wave nature of light.
+As an intermission, a light spot in the centre of a circular shadow. This effect is due to Fresnel diffraction.\cite{wiki:Arago}. The Argo spot played an important role in whether light is a particle or a wave, and indicates strongly the wave nature of light.
 
 
 \section{Theory}
@@ -60,7 +61,7 @@ Where $m$ is the order of the minimum, $a$ is the width of the slit and $\lambda
 \sin \theta_{max} \approx \pm (m+1/2)\frac{\lambda}{a}
 \end{equation}\label{eq:slitMax}
 
-This was so used to calculate the unknown wave length of a laser:
+This can so be used to calculate the unknown wave length of a laser:
 \begin{equation}
 \lambda = \sin \theta_{max}\frac{a}{m+1/2} \approx \theta_{max}\frac{a}{m+1/2}
 \end{equation}
@@ -68,9 +69,7 @@ This was so used to calculate the unknown wave length of a laser:
 \subsection{Paper Clip}\label{sec:theoryPaperClip}
 When the single slit is replaced with a single solid object like a paper clip, a diffraction pattern is still observed, but this time inversed. This is due to Babinet's principle, which states: 
 
-'If we add a diffraction pattern made by a object \textit{A} and another diffraction pattern made by the complimentary to \textit{A}, the resulting diffraction pattern is as none of the objects existed.'
-
-\textbf{Legg til Referanse her!!!}
+'If we add a diffraction pattern made by a object \textit{A} and another diffraction pattern made by the complimentary to \textit{A}, the resulting diffraction pattern is as none of the objects existed.'\cite{bolger}
 
 We can find the angle of the resulting maxima from the following formula
 
@@ -87,7 +86,7 @@ Given any type of a circular lens, the lowest image resolution of that lens is d
 \theta_{min} = K\frac{\lambda}{d}
 \end{equation}\label{eq:diffLimit}
 
-Where $d$ is the diameter of the lens, $\lambda$ is the wave length of the light and $K$ is some constant. This is the first minimum of the Airy diffraction pattern. For any two objects with a smaller angular distance, there images are indistinguishable from one another, thus appearing as one object.
+Where $d$ is the diameter of the lens, $\lambda$ is the wave length of the light and $K$ is some constant. This is the first minimum of the Airy diffraction pattern. For any two objects with a smaller angular distance, their images are indistinguishable from one another, thus appearing as one object.
 
 The constant $K$ need to be found empirically. This is done below.
 
@@ -106,7 +105,7 @@ d_{min} = r\theta_{min}
 \subsection{Single Slit Experiment}
 For the single slit experiment we placed a laser of unknown wavelength, powered by a 4.5 V battery on simple platform and aimed it at a slit with the width of  $a = 100\mu m$. The resulting diffraction pattern was projected on a wall. The distance from the slit to the wall (distance A in fig. \ref{fig:singleSlit}) was measured with a normal household tape measurer.
 
-We then found the distance between the maxima by projecting the diffraction pattern on a piece of white paper and marking every maxima from the 10th on the left to the 10th on the right with a pencil, and then using a ruler to measure the distance between the 10th maximum and the center on each side, and the distance between the 10th maximum on each side, thus getting 3 different measurement which could be used to get a more accurate result.\\
+We then found the distance between the maxima by projecting the diffraction pattern on a piece of white paper and marking every maxima from the 10th on the left to the 10th on the right with a pencil. We then used a ruler to measure the distance between the 10th maximum and the center on each side, and the distance between the 10th maximum on each side, thus getting 3 different measurement which could be used to get a more accurate result.\\
 
 \begin{figure}[H]
 \centering
@@ -238,9 +237,9 @@ Having found the diffraction limit of a lens, we were able to find the limit for
 \subsubsection{Single slit}
 The distance between the slit and the wall was measured with a tape measurer. Due to the flexible nature of the tape measurer, the distance was not measured in a straight line, giving rise to a small uncertainty. A uncertainty of $\pm 0.5 cm$ was added to the distance.
 
-It was also difficult to ensure that the measurement was done in a horizontal line, normal to the wall. The set up it self also contributed to the uncertainty of the measurements: to get a consistent distance between the maxima the laser had to be normal to the wall, and the slit in the center of the laser beam. \\
+It was also difficult to ensure that the measurement was done in a horizontal line, normal to the wall. The set up it self also contributed to the uncertainty of the measurements: to get a consistent distance between the maxima, the laser had to be normal to the wall, and the slit in the center of the laser beam. \\
 
-Our measurement of the distance of the extrema of the diffraction pattern was done quite crude, so both the marking of the maxima on the paper and the measuring with the ruler lead to uncertainty. We took extension of the maxima to be half that of the distance between two adjacent maxima. The error in measurement was estimated to at most one quarter that of this distance, giving us quite a large uncertainty. The error of the ruler was determined to insignificant compared to that of the marking, so only that uncertainty was kept.
+Our measurement of the distance of the extrema in the diffraction pattern was done quite crude, so both the marking of the maxima on the paper and the measuring with the ruler lead to uncertainty. We took extension of the maxima to be half that of the distance between two adjacent maxima. The error in measurement was estimated to at most one quarter that of this distance, giving us quite a large uncertainty. The error of the ruler was determined too insignificant compared to that of the marking, so only that uncertainty was kept.
 
 To compensate for all these uncertainties, an uncertainty of $\pm 0.1 cm$ was added to the distance to the 10th maxima.
 
@@ -338,7 +337,7 @@ Calculated value for $K$\eqref{eq:K} &  $0.71 \pm 0.475$ & -
 \begin{table}[H]
 \centering
 \begin{tabular}{ c c c }
-Mirror Size & Frequencies \\
+Mirror Size & Wavelength \\
 \hline
 6 m & 600 nm - 28.5 $\mu$m 
 \end{tabular}
@@ -350,13 +349,26 @@ Mirror Size & Frequencies \\
 \begin{tabular}{ c c c }
 Target & Distance $r$ & Smallest Size $r_{min}$ \\
 \hline
-Near-Earth orbit to Earth & 540 km &$8.1 \pm 2.7$ cm \\
-Earth to sun & 1 AU & $22.44 \pm 7.5$ km \\
-Solar System to Galactic Center & 8.5 pc & $3.9\cdot 10^7 \pm 1.3\cdot 10^7$ km \\
-Milky Way to galaxy formation &  4 billion ly & $184 \pm 61.5$ pc 
+Near-Earth orbit to Earth & 540 km &$3.834 \pm 2.57$ cm \\
+Earth to sun & 1 AU & $10.62 \pm 7.1$ km \\
+Solar System to Galactic Center & 8.5 pc & $1.86\cdot 10^7 \pm 1.25\cdot 10^7$ km \\
+Milky Way to galaxy formation &  4 billion ly & $87.07 \pm 58.25$ pc 
 \end{tabular}
-\caption{The smallest size the JWST can see at different distances. A Skinny triangle approximation is used with the angular resolution found in \eqref{JWSTDiffLimit}.}
-\end{table}\label{tab:visionJWST}
+\caption{The smallest size the JWST can see at different distances for the lower part if its observable wavelengths, $600$ nm. A Skinny triangle approximation is used with the angular resolution found in \eqref{JWSTDiffLimit}.}
+\end{table}\label{tab:visionJWSTLow}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ c c c }
+Target & Distance $r$ & Smallest Size $r_{min}$ \\
+\hline
+Near-Earth orbit to Earth & 540 km &$1.82 \pm 1.22$ m \\
+Earth to sun & 1 AU & $504.6 \pm 337.5$ km \\
+Solar System to Galactic Center & 8.5 pc & $5.9 \pm 3.96$ AU \\
+Milky Way to galaxy formation &  4 billion ly & $4137 \pm 2767$ pc 
+\end{tabular}
+\caption{The smallest size the JWST can see at different distances for highest part of the observable wavelengths, $28.5$ $\mu$m. }
+\end{table}\label{tab:visionJWSTHeigh}
 
 
 \subsection{Calculation}
@@ -436,33 +448,33 @@ So the estimated value was $K = 0.71 \pm 0.475$
 
 
 \subsubsection{JWST}
-From the above results, mainly \eqref{eq:K} we can find the diffraction limit of the James Webb Space Telescope:
+From the above results, mainly \eqref{eq:K} we can find the diffraction limit of the James Webb Space Telescope for the range of frequencies to can observe at:
 
 \begin{equation}
-\theta_{min} = (0.71 \pm 0.475) \cdot \frac{635 \text{ nm}}{6 \text{ m}}
+\theta_{min} = (0.71 \pm 0.475) \cdot \frac{[600 \text{ nm}, 28.5 \mu m]}{6 \text{ m}}
 \end{equation}
 \begin{equation}
-= 7.514\cdot 10^{-8} \pm 5.027\cdot 10^{-8}
+= [7.1\cdot 10^{-8} \pm 4.75\cdot 10^{-8},3.373\cdot10^{-6} \pm 2.256\cdot10^{-6}]
 \end{equation}\label{JWSTDiffLimit}
 
-This can then be used to find the smallest physical sizes the JWST can see at different distances, with the use of the skinny triangle approximation \eqref{eq:skinny}. These distances can be found in table \eqref{tab:visionJWST}
+This can then be used to find the smallest physical sizes the JWST can see at different distances, with the use of the skinny triangle approximation \eqref{eq:skinny}. These distances can be found in table \ref{tab:visionJWSTHeigh} and \ref{tab:visionJWSTLow}.
 \section{Conclusions}
 \label{sec:conclusions}
 
 \subsection{Single Slit}
-From the single slit experiment we found that the wave length of the laser was $\lambda = 641 \pm 12.29 \text{ nm}$. This is within what one would expect of red laser point, which normally is around $\lambda = 650$ nm \textbf{Refrence}. Our result could have been more certain if we had measured the minima of the diffraction pattern, instead of the maxima, giving us a possible improvement for a future experiment.
+From the single slit experiment we found that the wave length of the laser was $\lambda = 641 \pm 12.29 \text{ nm}$. This is within what one would expect of red laser point, which normally is around $\lambda = 650$ nm \cite{laser}. Our result could have been more certain if we had measured the minima of the diffraction pattern, instead of the maxima, giving us a possible improvement for a future experiment.
 
 \subsection{Paper Clip}
-The observed pattern from the paper clip experiment was what we expected from Babinet's principle, a diffraction pattern showing maxima where the single slit shown minima, and vice versa. This enabled us to calculate the width of the paper clip as $0.4743 \pm 0.01281 \text{ mm}$. This is smaller then one would expect, but the low uncertainty may show that we are close to the right answer. One reason we may such low uncertainty is that we underestimated the uncertainty from the subdividing of the distance from the paper clip to the wall(fig. \ref{fig:setupPaperClip}), and a higher uncertainty may have been justified.
+The observed pattern from the paper clip experiment was what we expected from Babinet's principle, a diffraction pattern showing maxima where the single slit shown minima, and vice versa. This enabled us to calculate the width of the paper clip as $0.4743 \pm 0.01281 \text{ mm}$. This is smaller then one would expect, but the low uncertainty may show that we are close to the right answer. One reason we may such low uncertainty is that we underestimated the uncertainty from the subdividing of the distance from the paper clip to the wall(fig. \ref{fig:setupPaperClip}), and a higher uncertainty may have been justified. This may be interesting to do in a future experiment.
 
 \subsection{Diffraction by a Circular Aperture and JWST}
-From the diffraction photographed in fig. \ref{fig:airy} we were able to calculate that the value for $K$ in eq. \ref{eq:diffLimit} was $K = 0.71 \pm 0.475$. From this we where able to calculate the angular resolution of the JWST as  $\theta_{min} = 7.514\cdot 10^{-8} \pm 5.027\cdot 10^{-8}$. This is a major upgrade from HST's angular resolution of $4.85\cdot10^{-7}$. \textbf{REFERENCE}. The sizes of objects JWST are able to see, found in table \ref{tab:visionJWST}, are quite impressive. Had JWST been planned to orbit near-earth orbit instead of in $L_2$, it would have had the capability to see people and every number plates of cars. But thankfully it is suppose to look into the abyss of space rather than onto earth.
+From the diffraction photographed in fig. \ref{fig:airy} we were able to calculate that the value for $K$ in eq. \ref{eq:diffLimit} was $K = 0.71 \pm 0.475$. From this we where able to calculate the angular resolution of the JWST as  $[7.1\cdot 10^{-8} \pm 4.75\cdot 10^{-8},3.373\cdot10^{-6} \pm 2.256\cdot10^{-6}]$. This is a range depending on the wavelength it is observing in. For the lowest wavelengths this is a major upgrade from HST's angular resolution of $4.85\cdot10^{-7}$. \cite{hubbel}. The sizes of objects JWST are able to see, found in table \ref{tab:visionJWSTHeigh} and \ref{tab:visionJWSTLow}, are quite impressive. Had JWST been planned to orbit near-earth orbit instead of in $L_2$, it would have had the capability to see people and even number plates of cars. But thankfully it is suppose to look into the abyss of space rather than onto earth.
 
 There are still a problem with the uncertainty of $K$. The major uncertainty seems to come from the uncertainty in the number of pixels in the Airy disc, so if a more precise value is to be obtained in the future, a camera with a higher pixel count has to be used. The distance between the lens and the objective must also be measured better to ensure a better result.
 
 
 \subsection{Arago Spot}
-Shining a laser on a circular plastic piece, gave a shadow with a small dot of light in the middle, exactly as the theory would expect. We didn't get mush useful data from this experiment, and was used more to show that the laser set up worked.
+Shining a laser on a circular plastic piece, gave a shadow with a small dot of light in the middle, exactly as the theory would expect. We didn't get much useful data from this experiment, and was used more to show that the laser set up worked.
 
 \subsection{Unfinished Experiments}
 Given the short lab time we were able to obtain, there were experiments we weren't able to do.
@@ -471,10 +483,8 @@ The first thing we wanted to study was the effect on the Airy pattern by placing
 
 The second experiment we wanted to do was to look at the diffraction pattern of dust. Since dust is circular and opaque, we would expect a complimentary Airy pattern, as predicted by Babinet's principle.
 
-\begin{thebibliography}{}
-%\bibliography{ref}
-%\bibliographystyle{plain}
-\end{thebibliography}
+\bibliographystyle{plainnat}
+\bibliography{ref}
 
 
 \end{document}
