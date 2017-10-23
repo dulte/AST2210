@@ -23,7 +23,7 @@ class image_processor:
 
     def make_histogram(self,image, title=""):
         n, bins, patches = plt.hist(image)
-        plt.title("")
+        plt.title(title)
         plt.show()
 
     def get_extrema(self, image):
@@ -56,7 +56,7 @@ class image_processor:
                          center[1] - int(size/2):center[1] + int(size/2)]
 
 
-    def process_image_mean_and_noice(self,image_names):
+    def process_image_mean_and_noise(self,image_names):
         b1 = self.read_image(image_names[0])
         b2 = self.read_image(image_names[1])
 
@@ -71,27 +71,27 @@ class image_processor:
         return b_center_mean, b_center_std
 
     def get_g(self,bias_names,flat_names):
-        f_mean,f_std = self.process_image_mean_and_noice(flat_names)
-        b_mean,b_std = self.process_image_mean_and_noice(bias_names)
+        f_mean,f_std = self.process_image_mean_and_noise(flat_names)
+        b_mean,b_std = self.process_image_mean_and_noise(bias_names)
 
         return (f_mean - b_mean)/(f_std**2 - b_std**2)
 
-    def get_noice(self,image_names, save=False):
+    def get_noise(self,image_names, save=False):
         even_sum = self.read_image(image_names[0])
         odd_sum = self.read_image(image_names[1])
 
         if save:
-            noices= np.zeros(int(len(image_names)/2))
-            noices[0] = self.get_std(even_sum-odd_sum)
+            noises= np.zeros(int(len(image_names)/2))
+            noises[0] = self.get_std(even_sum-odd_sum)
 
         for i in range(2,len(image_names),2):
             even_sum += self.read_image(image_names[i])
             odd_sum += self.read_image(image_names[i+1])
             if save:
-               noices[int(i/2)] = self.get_std(even_sum-odd_sum) /(i/2)
+               noises[int(i/2)] = self.get_std(even_sum-odd_sum) /(i/2)
 
         if save:
-            return noices, self.get_std(even_sum-odd_sum)
+            return noises, self.get_std(even_sum-odd_sum)
 
         return self.get_std(even_sum-odd_sum)
 
@@ -135,9 +135,41 @@ class image_processor:
     def save_image(self,image,name):
         im = Image.fromarray(np.uint8(np.where(image>255, 255,image)))
         im.save(name)
+        
+    
+    def plot_color_hist(self,name):
+        data = self.read_image(name)
+        
+        
+        value_count = np.zeros((3,256))
+        for i in range(3):
+            for val in range(256):
+                value_count[i,val] = np.sum(data[:,:,i] == val)
+                
+        print("The maximum value for red is: ",np.max(data[:,:,0]))
+        print("The maximum value for blue is: ",np.max(data[:,:,2]))
+        print("The maximum value for green is: ",np.max(data[:,:,1]))
+        
+        plt.plot(value_count[0],"r")
+        plt.plot(value_count[1],"g")
+        plt.plot(value_count[2],"b")
+        
+        plt.show()
+        
+    def plot_highest_row_color(self,name):
+        data = self.read_image(name)
+        
+        print("The maximum value for red is: ",np.max(data[:,:,0]))
+        print("The maximum value for blue is: ",np.max(data[:,:,2]))
+        print("The maximum value for green is: ",np.max(data[:,:,1]))
 
-
-
+        data = np.mean(data,axis=0)
+        
+        plt.plot(data[:,0],"r")
+        plt.plot(data[:,1],"g")
+        plt.plot(data[:,2],"b")
+        
+        plt.show()
 
 
 
@@ -161,11 +193,11 @@ if __name__=="__main__":
 
     flat_frames = ["ff" + str(i) for i  in range(1,17)]
 
-    print("The noice of the two flat fields: ",ip.get_noice(["ff2","ff3"]))
+    print("The noise of the two flat fields: ",ip.get_noise(["ff2","ff3"]))
 
     print("The convertion constant: g = ",ip.get_g(["bf1","bf2"],["ff1","ff3"]))
 
-    plt.plot(ip.get_noice(flat_frames,save=True)[0])
+    plt.plot(ip.get_noise(flat_frames,save=True)[0])
     plt.show()
     raw = "3_1"
     raw_darks = ["df" + str(i) + "_4" for i in range(1,6)]
@@ -176,7 +208,8 @@ if __name__=="__main__":
 
     ip.plot_picture_slice(raw)
 
-
+    #ip.plot_color_hist("rød fokus")
+    ip.plot_highest_row_color("spekter")
 
     """
     Vi lagde flat field ved å sette ark foran kameraet,

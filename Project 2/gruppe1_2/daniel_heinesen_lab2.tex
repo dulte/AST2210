@@ -5,6 +5,7 @@
 \usepackage{float}
 \usepackage{amsmath}
 \usepackage{epsfig,floatflt}
+\usepackage{hyperref}
 
 
 
@@ -16,8 +17,8 @@
 
 \email{daniel.heinesen@sf-nett.no}
 
-\altaffiltext{1}{Institute of Theoretical Astrophysics, University of
-  Oslo, P.O.\ Box 1029 Blindern, N-0315 Oslo, Norway}
+%\altaffiltext{1}{Institute of Theoretical Astrophysics, University of
+ % Oslo, P.O.\ Box 1029 Blindern, N-0315 Oslo, Norway}
 
 
 %\date{Received - / Accepted -}
@@ -30,80 +31,91 @@
 \section{Introduction}
 \label{sec:introduction}
 
-Discuss background, physical importance and possibly some history of
-the problem that is being studied in this paper.
-
 
 \section{Method}
 \label{sec:method}
+
+\subsection{Color Camera and White Light}
+For this first experiment a white light was shined on and focus by a thin single lens. In the focal point of the lens a microscope objective was placed. The focal point of the lens was fond by holding a piece white paper in front of the lens and finding the distance where the light is most concentrated. 
+
+The CCD was then placed in front of the objective. Here we wanted to look at the properties of the different colors in the white light, so a RGB CCD was used\footnote{For this a Edmund Optics color USB camera was used.}. 
+
+We could now use out Graphical User Interface(GUI) to look at the resulting pattern. The result can be described as a histogram showing the amount of light received be the three sensors in the CCD \emph{REF THEORY}. Due to chromatic aberration \emph{REF TO THEORY} the different colors focus at different focal length, so to look at this effect we moved the CCD carefully back- and forwards to focus the different colors.
+
+The GUI of the CCD also allowed us to adjust the pixel count, frame rate and exposure time, giving us the ability to study the effect this had on the picture.
+
+Filters to filter out some of the colors in the white light was placed in front of the light, so we could look on the effect this would have on the light on the CCD. 
+
+
+\subsection{Monochromatic Camera and Single Slit}
+
+\subsubsection{Setup}
+
+The white light was now switched out with a monochromatic red laser with wavelength $\lambda = (641 \pm 12.3)$ nm \emph{REF MY SELF}. To ensure that the laser didn't destroy the CCD, a damping filter was placed in front laser. Much of the same setup as above was then used for the rest: a thin lens was used to focus the laser, and in the focal point a objective was placed. The focused laser light was then captured by a monochromatic CCD\footnote{A monochromatic Edmund Optics USB camera}. 
+
+The camera and lens was then adjusted until a sharp diffraction pattern appeared in the middle of the computer screen. The distance from the slit to the CCD was so measured carefully with a ruler. A picture of the diffraction pattern was then taken. To clean the picture the following series of pictures were taken \emph{REF TO THEORY ABOUT CLEANING}. All of the apparatuses, the laser, lens and objective, were removed, and for all of the pictures except the flat frames (see below) the dust cover was placed on the camera: \\
+
+
+\begin{itemize}
+\item $2$ bias frames with minimum exposer
+\item $5$ dark frames with the same exposer as the diffraction pattern
+\item $1$ dark frame with maximum exposer
+\item $16$ flat frames -- see method below -- with exposer set so that the average pixel value is about half that of max.
+\item $5$ dark frames with the same exposer as for the flat frames
+\end{itemize}
+
+The flat frames are takes as follows: The dust cover was removed, then a white piece of paper was placed in front of the CCD and a white light was shined on the paper. The white paper ensured a homogeneous, white gradient over the whole CCD chip. With these axillary pictures we could clean the picture of the diffraction pattern.
+
+\subsubsection{Statistical Analysis}
+This part was done in Python\emph{REF CODE}, but could be found with most other scripting languages, like R or IDL:
+
+First a bias frame and the maximum exposer dark frames has converted to an array. From these arrays the max, min, mean and distribution of the pixel values was found and compared. \\
+
+To find the readout noise we first looked at the two bias frames. To exclude the possibility of strange results near the edge of the picture, a symmetric $300$x$300$ central part was extracted out of the to images and used. The two  images(the central parts) were then added, and the mean pixel value was found. This is the same value as $\bar{B}_1 + \bar{B}_2$\emph{REF THEORY}. We then calculated the noise for the biases. This was done by first subtracting the images \emph{REF THEORY}, then finding the standard deviation of the resulting image $\sigma_{B_1 - B_2}$. \emph{REF THEORY FOR $\sqrt{2}$}.
+
+The same was then done for two flat frames \emph{WRITE WHICH}: first the central regions of the images were found. A mean of the sum of the images was found $\bar{F}_1 + \bar{F}_2$, and then the noise of the difference of the images was found $\sigma_{F_1 - F_2}$.
+
+From this the conversion factor then consequently the readout noise can be calculated \emph{REF THEORY}.\\
+
+To see how the number of flat frames taken improved the normalized noise, the following was calculated with the same approach as the noise above:
+$\sigma_{F_1-F_2}$, $\sigma_{(F_1 + F_3) - (F_2+F_4)}$ and so on until all the flat frames were used. For each time a new $\sigma$ as calculated it was normalized with the number of pairs of flat frames used, then saved. The saved values for the noises were then plotted and compared.\\
+
+To clean the image of the diffraction pattern we generally want to subtract away the noise from the dark frames, and divide away the noise from the flat frames. This was done as follows:
+
+First an average of the $16$ flat frames was found $F_{average}$. An average of the $5$ dark frames corresponding to the flat frame $D_{F,average}$ was then found. We then removed the noise in the average flat frame made by the dark current, giving us the master flat frame $F_{master} = F_{average}-D_{F,average}$. This was then normalized with the scalar mean, giving us $F_{norm. master}$.
+
+Secondly the dark frames corresponding to the image of the diffraction pattern was average to find $D_{I,raw,average}$. 
+
+Finally the final, clean image of the diffraction pattern was given as \emph{REF THOERY}
+
+\begin{equation}
+I_{corrected} = \frac{I_{raw} - D_{I,raw,average}}{F_{norm. master}}
+\end{equation}
+
+With a clean image of the diffraction pattern, the values of the middle of the images was plotted, and the distance, in pixels, to the first minima was found, and from \emph{REF THEORY} the size of the pixels could be found.
+
+\subsection{Uncertainties}
+
+
+
+
+
+
+
  
 
 \section{Data}
 \label{sec:data}
 
-Summarize properties of data. Which data are used (experiment,
-frequencies etc.)? Pixel resolution ($N_{\textrm{side}}$),
-$\ell_{\textrm{max}}$ -- everything necessary to repeat the analysis
-for other researchers.
 
-Show a sky map of the smoothed data. Use the Healpix routine
-``smoothing'' to do this; it works just like anafast. Smooth with a
-$7^{\circ}$ beam, and plot with ``map2gif''. Show the RMS pattern as
-well. 
 
 \section{Results}
 \label{sec:results}
 
-
-Show the 2D likelihood contours. Summarize constraints on $Q$ and
-$n$. 
-
-
 \section{Conclusions}
 \label{sec:conclusions}
 
-Summarize results. Discuss their importance, referring to the
-discovery to the initial seeds for structure formation. Mention that
-these results are in good agreement with expectations from
-inflationary theory.
 
-
-
-%\begin{figure}[t]
-%
-%\mbox{\epsfig{figure=filename.eps,width=\linewidth,clip=}}
-%
-%\caption{Description of figure -- explain all elements, but do not
-%draw conclusions here.}
-%\label{fig:figure_label}
-%\end{figure}
-
-
-
-\begin{deluxetable}{lccc}
-%\tablewidth{0pt}
-\tablecaption{\label{tab:results}}
-\tablecomments{Summary of main results.}
-\tablecolumns{4}
-\tablehead{Column 1  & Column 2 & Column 3 & Column 4}
-\startdata
-Item 1 & Item 2 & Item 3 & Item 4
-\enddata
-\end{deluxetable}
-
-
-
-\begin{acknowledgements}
-  Who do you want to thank for helping out with this project?
-\end{acknowledgements}
-
-\begin{thebibliography}{}
-
-\bibitem[G{\'o}rski et al.(1994)]{gorski:1994} G{\'o}rski, K. M.,
-  Hinshaw, G., Banday, A. J., Bennett, C. L., Wright, E. L., Kogut,
-  A., Smoot, G. F., and Lubin, P.\ 1994, ApJL, 430, 89
-
-\end{thebibliography}
 
 
 \end{document}
