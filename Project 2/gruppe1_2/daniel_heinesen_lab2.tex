@@ -6,6 +6,8 @@
 \usepackage{amsmath}
 \usepackage{epsfig,floatflt}
 \usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+
 
 
 
@@ -33,6 +35,20 @@
 
 \section{Theory}
 \label{sec:theory}
+
+\subsection{Some Aberrations}
+
+Aberrations are effect due to the lens and bending of light, that leads to curtain unwanted errors in an image.
+
+\subsubsection{Coma}
+\label{sec:coma}
+Coma is an aberration that happens when the light hits the lens at an angle, leading some of the light to be bend more then other. This effect leads to a comet like picture.
+
+\subsubsection{Chromatic Aberration}
+\label{sec:chromAb}
+Chromatic aberration happens because the reflective index is dependent on the wavelength of the light. This gives the different colors different focal points.
+
+
 \subsection{The CCD}
 \label{sec:ccd}
 This is a short qualitative summary of the inner workings of the charge-coupled device (CCD):
@@ -86,17 +102,43 @@ Where $n_{pixels}$ is the number of pixels, and $c$ is some conversion factor, g
 We are also going to use the small angle approximation on \eqref{eq:diffPatt} and use our expression for $\theta$
 
 \begin{equation}
-m\lambda \approx a\theta = \frac{n_{pixels}\cdot c}{d}
+m\lambda \approx a\theta = a\frac{n_{pixels}\cdot c}{d}
 \end{equation}
 
 This gives us a nice expression for the size of the pixels
 
 \begin{equation}
-c \approx \frac{m\lambda d}{n_{pixels}}
+c \approx \frac{m\lambda d}{n_{pixels}a}
 \label{eq:pixelSize}
 \end{equation}
 
 
+\subsection{Different Cleaning Frame}
+
+The three types of 'cleaning images'\footnote{for a lack of a better name}:
+
+\subsubsection{Bias}
+When using a CCD there are a lot of electronics involved. The signal travels though a lot of cables. These cables may have either loss or gain of electrons. This normally leads to a constant gain or loss of signal. One of the most important gain in signal is from the electronics needed to take the electrons from the conduction layer of the CCD \ref{sec:ccd} to the register. This needs a constant potential to drive the electrons, which gives a gain in signal.
+
+The bias is additive, meaning that to remove it we need to quantify  the bias, then subtract it from the scientific image. To quantify the bias we take pictures without any light hitting the CCD, capturing only the signal from the electronics.\footnote{We will also capture the dark current, but for simplicity this is ignored.}
+
+\subsubsection{Dark Current}
+As mentioned in sec. \ref{sec:ccd} the barrier between the semiconductor and conducting layer is given as an energy $E_g$. Ideally this energy gap is so large that no electron will wander across it unless exited by a photon. But this is a quantum system it is never that easy. The energy of the electron follows a Fermi-Dirac distribution \emph{REF}
+
+\begin{equation}
+P(E,T) = \frac{1}{1 + e^{(E-E_f)/kT}}
+\end{equation}
+
+Where $E$ is the energy of the electron, $T$ the temperature, $E_f$ the Fermi energy and $k$ the Boltzmann's constant. Thus for larger temperatures we are more likely to find electrons with a high energy. Meaning that for normal room temperature, there will be electrons that, due to quantum mechanics, will have enough energy to overcome the energy gap and reach the conducting layer. So even though there are no light, the CCD may register signals. This is dark current.
+
+Just like the bias, dark current is additive, and must be subtracted from the raw scientific image. The value of the dark current is found be taking pictures without light.
+
+\subsubsection{Flat Field}
+Maybe the most important correction image is the flat field. Flat fields may be the result of many things. Due to differing efficiency from pixel to pixel in the CCD, the signal may not be uniform over the whole picture, even though the same light is shined upon all the pixels. 
+
+There may also be dust on the lenses or other imperfections. This is also adjusted with the flat field.
+
+The flat field is multiplicative, and is adjusted for by dividing the raw scientific image by the flat frames. Since the flat field is due to imperfections in the pixels and on the lenses(and other instrument before the CCD), we want to take an image of a uniformly lit image. This gives us the flat frame.\footnote{I may use flat field and flat frame interchangeably throughout the text, but they are taken to mean the same: the image of the uniform lit background.}
 
 \subsection{Statistical Analysis}
 To clean the images we want ideal flat field, dark frames and bias frames. But this is not the case. There are some noise in the images. This is characterized as the deviation from the mean of the image, or the standard deviation $\sigma$.
@@ -159,6 +201,7 @@ We have now found the noise as the standard deviation of the pixel counts in the
 
 \begin{equation}
 g = \frac{F_{electrons}}{\sigma_{electrons}} = \frac{(\bar{F}_1 - \bar{F}_2) + (\bar{B}_1-\bar{B}_2)}{\sigma_{F_1 - F_2}^2 - \sigma_{B_1 - B_2}^2}
+\label{eq:g}
 \end{equation}
 
 Where $F_i$ is a flat frame and $B_i$ is the corresponding bias frame. The second expression comes from the fact that we use the bias frames to clean the flat frames before finding $g$. We can now find the readout noise as
@@ -170,6 +213,7 @@ Where $F_i$ is a flat frame and $B_i$ is the corresponding bias frame. The secon
 Which bias frame is used for this should ideally be the same, since we expect time-independent, constant bias noise.
 
 \subsubsection{Cleaning the Image}
+\label{sec:cleaning}
 To clean the image we want to remove the effects made be the dark current and flat frame. As mentioned \emph{REF} the dark current is additive while the flat field is multiplicative. To remove the noise from the the dark and flat frames, we take the average of multiple frames. But the flat frames do also have dark current, so we need to subtract the the corresponding average dark frame from the average flat frame and normalize it. This is the normalized flat frame. We can then simply clean the raw scientific image of the diffraction pattern by first subtract the average dark frame $D_{I,raw,average}$ and divide by the normalized master flat frame $F_{norm. master}$
 
 \begin{equation}
@@ -186,7 +230,7 @@ For this first experiment a white light was shined on and focus by a thin single
 
 The CCD was then placed in front of the objective. Here we wanted to look at the properties of the different colors in the white light, so a RGB CCD was used\footnote{For this a Edmund Optics color USB camera was used.}. 
 
-We could now use out Graphical User Interface(GUI) to look at the resulting pattern. The result can be described as a histogram showing the amount of light received be the three sensors in the CCD \emph{REF THEORY}. Due to chromatic aberration \emph{REF TO THEORY} the different colors focus at different focal length, so to look at this effect we moved the CCD carefully back- and forwards to focus the different colors; red, green and blue.
+We could now use out Graphical User Interface(GUI) to look at the resulting pattern. The result can be described as a histogram showing the amount of light received be the three sensors in the CCD \ref{sec:ccd}. Due to chromatic aberration \ref{sec:chromAb} the different colors focus at different focal length, so to look at this effect we moved the CCD carefully back- and forwards to focus the different colors; red, green and blue.
 
 The GUI gave the possibility of viewing the pixel count of a slice of the image, for the different colors. These values were not saved, but the image itself was. The images was then used to make a plot showing the mean pixel count of each color over each column.
 
@@ -201,7 +245,7 @@ Filters to filter out some of the colors in the white light was placed in front 
 
 The white light was now switched out with a monochromatic red laser with wavelength $\lambda = (641 \pm 12.3)$ nm \emph{REF MY SELF}. To ensure that the laser didn't destroy the CCD, a damping filter was placed in front laser. Then a single slit with a width if $a = 100\mu m$ is placed in front of the laser the laser. The diffracted laser light was then captured by a monochromatic CCD\footnote{A monochromatic Edmund Optics USB camera}. 
 
-The camera and slit was then adjusted until a sharp diffraction pattern appeared in the middle of the computer screen. The distance from the slit to the CCD was so measured carefully with a ruler. An image of the diffraction pattern was then taken. To clean the picture the following series of pictures were taken \emph{REF TO THEORY ABOUT CLEANING}. All of the apparatuses were removed, and for all of the pictures except the flat frames (see below) the dust cover was placed on the camera: \\
+The camera and slit was then adjusted until a sharp diffraction pattern appeared in the middle of the computer screen. The distance from the slit to the CCD was so measured carefully with a ruler. An image of the diffraction pattern was then taken. To clean the picture the following series of pictures were taken \ref{sec:cleaning}. All of the apparatuses were removed, and for all of the pictures except the flat frames (see below) the dust cover was placed on the camera: \\
 
 
 \begin{itemize}
@@ -223,7 +267,7 @@ To find the readout noise we first looked at the two bias frames. To exclude the
 
 The same was then done for two flat frames \emph{WRITE WHICH}: first the central regions of the images were found. A mean of the sum of the images was found $\bar{F}_1 + \bar{F}_2$, and then the noise of the difference of the images was found $\sigma_{F_1 - F_2}$.
 
-From this the conversion factor then consequently the readout noise can be calculated \emph{REF THEORY}.\\
+From this the conversion factor then consequently the readout noise can be calculated \eqref{eq:g}\\
 
 To see how the number of flat frames taken improved the normalized noise, the following was calculated with the same approach as the noise above:
 $\sigma_{F_1-F_2}$, $\sigma_{(F_1 + F_3) - (F_2+F_4)}$ and so on until all the flat frames were used. For each time a new $\sigma$ as calculated it was normalized with the number of pairs of flat frames used, then saved. The saved values for the noises were then plotted and compared.\\
@@ -247,11 +291,13 @@ With a clean image of the diffraction pattern, the values of the middle of the i
 \subsection{Uncertainties}
 
 \subsubsection{Color Camera and White Light and Lens}
+\label{sec:uncWhiteLight}
 To get a sharp diffraction pattern, the lens, objective and CCD has to be normal to the direction of the path of the light. If the lens is off the normal, we will get a coma, and due to the chromatic aberration in the lens (even thou it is thin, it has a physical thickness) the coma will be enhanced, leading to a smear out of colors(as seen here \emph{REF PIC}). This means that it might be difficult to get a sharp pattern, and the Airy disk might be larger then expected due to this coma, unless the lens is completely normal to the light(fortunately we are not measuring the Airy disk, so this uncertainty is only a curiosity).
 
 When looking at the pixel counts for the different colors, we wanted to look at the pixel count when green dominated. But since green is a mix of blue and yellow, the blue is quite high when ever green is high. So there is quite a small range where green dominates all other colors, including blue. This range was difficult to find by only moving the camera back and forth, so the resulting image does not show very good results.
 
 \subsubsection{Monochromatic Camera and Single Slit}
+\label{sec:uncSlit}
 
 Much like with the white light and lens, the quality of the diffraction pattern is dependent on the single slit, objective and CCD being normal to the laser. This was adjusted as best as possible to make this uncertainty as low as possible.
 The slit has imperfections in its construction, making the diffraction pattern very uneven, instead of the straight lines we ideally want to see \emph{REF IMAGE}.
@@ -266,14 +312,125 @@ As will be discussed later \emph{REF DISCUSSION} the way we made the flat field 
 
 
  
-
-\section{Data}
-\label{sec:data}
-
-
-
 \section{Results}
 \label{sec:results}
+
+
+\subsection{Color Camera and White Light and Lens}
+Image of the full spectrum:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{spekter.png}
+\caption{Image of the full spectrum. We can see that the comet like spread of the coma, combined with the separation of the different colors due to the chromatic aberration.}
+\label{img:spekter}
+\end{figure}
+
+Capturing the images for the different colors gave:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{blatt.png}
+\caption{Image of blue light in focus.}
+\label{img:blue}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{rod_fokus.png}
+\caption{Image of red light in focus.}
+\label{img:red}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{gront_fokus.png}
+\caption{Image of green light in focus.}
+\label{img:green}
+\end{figure}
+
+We can see that for the blue focus it is easy to see that blue dominates. For red it is some what less clear, but we see that there are mostly red light there. But for green the dot in the middle almost looks white, while the ring around looks more red. If we look at the same image but with a red filter we see:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{red_filter_green_focus.png}
+\caption{Image of green light but with a red filter. As we can see even though we had the CCD in the focal point of the green light, there is a lot of red light too. The reason is mentioned here \ref{sec:uncWhiteLight}}
+\label{img:red_filter_green_focus}
+\end{figure}
+
+And as we expected there are alot of red in the light light imaged.
+
+These images gave the following distribution:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{blueDist.png}
+\caption{The distribution of the average pixel count for the different colors when in the focal point of the blue light. We can see that blue is dominating, but there are still quite a lot of green light.}
+\label{img:green}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{redDist.png}
+\caption{The distribution of the average pixel count for the different colors when in the focal point of the red light. We see that red is dominating, while blue is almost non-existent}
+\label{img:green}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{greenDist.png}
+\caption{The distribution of the average pixel count for the different colors when in the focal point of the green light. We see that while green has the largest average pixel count, red is close behind and for most of the image higher than green.}
+\label{img:green}
+\end{figure}
+
+The highest pixel counts for the given images are
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c | c | c | c}
+Color in focus & Red & Green & Blue \\
+\hline
+Blue & $24$ & $137$ & $202$\\
+Red & $255$ & $255$ & $255$\\
+Green & $211$ & $255$ & $255$
+\end{tabular}
+\caption{The maximal pixel count for the different colors for the different focal points.}
+\end{table}
+
+
+\subsection{Monochromatic Camera and Single Slit}
+
+
+\subsubsection{Pixel Size}
+
+Having the cleaned picture \emph{REF PIC}, we can get the slice of the center to find the distance to the minimum
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{slice.png}
+\caption{A slice of the middle of the cleaned image of the diffraction pattern.}
+\label{img:green}
+\end{figure}
+
+If we look at the plot there are about 200 pixels from minimum to minimum, meaning that there are about $100$ pixels from the center to the first minimum. We discussed the uncertainty of the distance in pixels in sec. \ref{sec:uncSlit}. So adding that we get that
+
+\begin{equation}
+n_{pixels} = 100\pm 5
+\end{equation}
+
+We can then use \eqref{eq:pixelSize} to find the size of the pixels. We use that $m = 1$, $\lambda (641 \pm 12.3)$ nm \emph{REF MYSELF}, $a = 100 \mu m$ and $d = (8.5 \pm 0.2)$ cm:
+
+\begin{equation}
+c =  \frac{(641 \pm 12.3) \text{ nm} (8.5 \pm 0.2) \text{ cm}}{100\pm 5 \cdot100 \mu m}
+\end{equation}
+
+
+
+
+
+
+
+
+
 
 \section{Conclusions}
 \label{sec:conclusions}

@@ -100,14 +100,20 @@ class image_processor:
         return self.get_std(even_sum-odd_sum)
 
     def get_picture_slice(self,name):
-        data = self.read_image(name,fullFOV=False)
+        if isinstance(name,np.ndarray):
+            data = name
+        else:
+            data = self.read_image(name,fullFOV=False)
 
         return data[int(data.shape[0]/2),:]
 
     def plot_picture_slice(self,name):
         data = self.get_picture_slice(name)
-
+        
         plt.plot(data)
+        plt.title("Slice of the Center of the Cleaned Diffraction pattern")
+        plt.xlabel("Pixel")
+        plt.ylabel("Pixel value")
         plt.show()
 
 
@@ -158,7 +164,7 @@ class image_processor:
 
         plt.show()
 
-    def plot_highest_row_color(self,name):
+    def plot_highest_row_color(self,name,title=""):
         data = self.read_image(name)
 
         print("The maximum value for red is: ",np.max(data[:,:,0]))
@@ -167,11 +173,21 @@ class image_processor:
 
         data = np.mean(data,axis=0)
 
-        plt.plot(data[:,0],"r")
-        plt.plot(data[:,1],"g")
-        plt.plot(data[:,2],"b")
+        plt.plot(data[:,0],"r",label="Red")
+        plt.plot(data[:,1],"g",label="Green")
+        plt.plot(data[:,2],"b",label="Blue")
+        plt.title(title)
+        plt.xlabel("Pixel")
+        plt.ylabel("Average pixel count over row")
+        plt.legend()
 
         plt.show()
+        
+    def convert_images(self,names):
+        data = self.read_images(names)
+        
+        for i,im in enumerate(data):
+            self.save_image(im,names[i] + ".png")
 
 
 
@@ -208,10 +224,17 @@ if __name__=="__main__":
     corr_I = ip.clean_image(raw,raw_dark_names=raw_darks,flat_names=flat_frames,flat_dark_names=flat_darks,fullFOV=False)
     ip.save_image(corr_I,"corrected_image.png")
 
-    ip.plot_picture_slice(raw)
+    ip.plot_picture_slice(corr_I)
 
     #ip.plot_color_hist("rød fokus")
-    ip.plot_highest_row_color("grønt fokus")
+    print("For Green Focus:")
+    ip.plot_highest_row_color("grønt fokus",title="Distribution for Green Light")
+    print("For Red Focus:")
+    ip.plot_highest_row_color("rød fokus",title="Distribution for Red Light")
+    print("For Blue Focus:")
+    ip.plot_highest_row_color("blått",title="Distribution for Blue Light")
+    
+    #ip.convert_images(["rødt filter grønt fokus"])
 
     """
     Vi lagde flat field ved å sette ark foran kameraet,
