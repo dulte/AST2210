@@ -10,14 +10,18 @@ class image_processor:
         self.extension = file_extension
 
 
-    def read_image(self,name):
+    def read_image(self,name,fullFOV=True):
         im = Image.open(self.folder + name + self.extension)
-        return np.array(im)
 
-    def read_images(self,names):
+        if fullFOV:
+            return np.copy(np.array(im))
+        elif not fullFOV:
+            return self.get_center(np.array(im))
+
+    def read_images(self,names,fullFOV=True):
         ims = []
         for name in names:
-            ims.append(self.read_image(name))
+            ims.append(self.read_image(name,fullFOV))
 
         return np.array(ims)
 
@@ -52,8 +56,8 @@ class image_processor:
     def get_center(self, image, size=300):
         image_shape = image.shape
         center = (int(image_shape[0]/2),int(image_shape[1]/2))
-        return image[center[0] - int(size/2):center[0] + int(size/2),\
-                         center[1] - int(size/2):center[1] + int(size/2)]
+        return np.copy(image[center[0] - int(size/2):center[0] + int(size/2),\
+                         center[1] - int(size/2):center[1] + int(size/2)])
 
 
     def process_image_mean_and_noise(self,image_names):
@@ -96,7 +100,7 @@ class image_processor:
         return self.get_std(even_sum-odd_sum)
 
     def get_picture_slice(self,name):
-        data = self.read_image(name)
+        data = self.read_image(name,fullFOV=False)
 
         return data[int(data.shape[0]/2),:]
 
@@ -109,15 +113,15 @@ class image_processor:
 
 
 
-    def clean_image(self,I_raw_name,raw_dark_names,flat_names,flat_dark_names):
-        I_raw = self.read_image(I_raw_name)
-        raw_darks = self.read_images(raw_dark_names)
+    def clean_image(self,I_raw_name,raw_dark_names,flat_names,flat_dark_names,fullFOV=True):
+        I_raw = self.read_image(I_raw_name,fullFOV=fullFOV)
+        raw_darks = self.read_images(raw_dark_names,fullFOV=fullFOV)
         raw_dark_avr = self.average_image(raw_darks)
 
-        flats = self.read_images(flat_names)
+        flats = self.read_images(flat_names,fullFOV=fullFOV)
 
 
-        flat_darks = self.read_images(flat_dark_names)
+        flat_darks = self.read_images(flat_dark_names,fullFOV=fullFOV)
 
         flat_dark_avr = self.average_image(flat_darks)
         flat_avr = self.average_image(flats)
@@ -127,48 +131,46 @@ class image_processor:
 
         flat_master_norm = flat_master/self.get_mean(flat_master)
 
-        #self.save_image(flat_master,"flat_master.png")
-
         return (I_raw - raw_dark_avr)/(flat_master_norm)
 
 
     def save_image(self,image,name):
         im = Image.fromarray(np.uint8(np.where(image>255, 255,image)))
         im.save(name)
-        
-    
+
+
     def plot_color_hist(self,name):
         data = self.read_image(name)
-        
-        
+
+
         value_count = np.zeros((3,256))
         for i in range(3):
             for val in range(256):
                 value_count[i,val] = np.sum(data[:,:,i] == val)
-                
+
         print("The maximum value for red is: ",np.max(data[:,:,0]))
         print("The maximum value for blue is: ",np.max(data[:,:,2]))
         print("The maximum value for green is: ",np.max(data[:,:,1]))
-        
+
         plt.plot(value_count[0],"r")
         plt.plot(value_count[1],"g")
         plt.plot(value_count[2],"b")
-        
+
         plt.show()
-        
+
     def plot_highest_row_color(self,name):
         data = self.read_image(name)
-        
+
         print("The maximum value for red is: ",np.max(data[:,:,0]))
         print("The maximum value for blue is: ",np.max(data[:,:,2]))
         print("The maximum value for green is: ",np.max(data[:,:,1]))
 
         data = np.mean(data,axis=0)
-        
+
         plt.plot(data[:,0],"r")
         plt.plot(data[:,1],"g")
         plt.plot(data[:,2],"b")
-        
+
         plt.show()
 
 
@@ -203,13 +205,13 @@ if __name__=="__main__":
     raw_darks = ["df" + str(i) + "_4" for i in range(1,6)]
     flat_frames = ["ff" + str(i) for i  in range(1,17)]
     flat_darks = ["df_ff" + str(i) for i in range(1,6)]
-    corr_I = ip.clean_image(raw,raw_dark_names=raw_darks,flat_names=flat_frames,flat_dark_names=flat_darks)
-    #ip.save_image(corr_I,"corrected_image.png")
+    corr_I = ip.clean_image(raw,raw_dark_names=raw_darks,flat_names=flat_frames,flat_dark_names=flat_darks,fullFOV=False)
+    ip.save_image(corr_I,"corrected_image.png")
 
     ip.plot_picture_slice(raw)
 
     #ip.plot_color_hist("rød fokus")
-    ip.plot_highest_row_color("spekter")
+    ip.plot_highest_row_color("grønt fokus")
 
     """
     Vi lagde flat field ved å sette ark foran kameraet,

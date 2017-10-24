@@ -40,7 +40,9 @@ For this first experiment a white light was shined on and focus by a thin single
 
 The CCD was then placed in front of the objective. Here we wanted to look at the properties of the different colors in the white light, so a RGB CCD was used\footnote{For this a Edmund Optics color USB camera was used.}. 
 
-We could now use out Graphical User Interface(GUI) to look at the resulting pattern. The result can be described as a histogram showing the amount of light received be the three sensors in the CCD \emph{REF THEORY}. Due to chromatic aberration \emph{REF TO THEORY} the different colors focus at different focal length, so to look at this effect we moved the CCD carefully back- and forwards to focus the different colors.
+We could now use out Graphical User Interface(GUI) to look at the resulting pattern. The result can be described as a histogram showing the amount of light received be the three sensors in the CCD \emph{REF THEORY}. Due to chromatic aberration \emph{REF TO THEORY} the different colors focus at different focal length, so to look at this effect we moved the CCD carefully back- and forwards to focus the different colors; red, green and blue.
+
+The GUI gave the possibility of viewing the pixel count of a slice of the image, for the different colors. These values were not saved, but the image itself was. The images was then used to make a plot showing the mean pixel count of each color over each column.
 
 The GUI of the CCD also allowed us to adjust the pixel count, frame rate and exposure time, giving us the ability to study the effect this had on the picture.
 
@@ -92,10 +94,14 @@ Finally the final, clean image of the diffraction pattern was given as \emph{REF
 I_{corrected} = \frac{I_{raw} - D_{I,raw,average}}{F_{norm. master}}
 \end{equation}
 
-With a clean image of the diffraction pattern, the values of the middle of the images was plotted, and the distance, in pixels, to the first minima was found, and from \emph{REF THEORY} the size of the pixels could be found.
+With a clean image of the diffraction pattern, the values of the middle of the images was plotted, and the distance, in pixels, to the first minima was found. From this distance the size of the pixels could be found \emph{REF THEORY}. 
 
 \subsection{Uncertainties}
 
+\subsubsection{Color Camera and White Light}
+To get a sharp diffraction pattern, the lens, objective and CCD has to be normal to the direction of the path of the light. If the lens is off the normal, we will get a coma, and due to the chromatic aberration in the lens (even thou it is thin, it has a physical thickness) the coma will be enhanced, leading to a smear out of colors(as seen here \emph{REF PIC}). This means that it might be difficult to get a sharp pattern, and the Airy disk might be larger then expected due to this coma, unless the lens is completely normal to the light(fortunately we are not measuring the Airy disk, so this uncertainty is only a curiosity).
+
+When looking at the pixel counts for the different colors, we wanted to look at the pixel count when green dominated. But since green is a mix of blue and yellow, the blue is quite high when ever green is high. So there is quite a small range where green dominates all other colors, including blue. This range was difficult to find by only moving the camera back and forth, so the resulting image does not show very good results.
 
 
 
