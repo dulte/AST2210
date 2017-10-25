@@ -7,7 +7,23 @@
 \usepackage{epsfig,floatflt}
 \usepackage{hyperref}
 \usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{lipsum}
 
+\lstset{language=c++}
+\lstset{alsolanguage=[90]Fortran}
+\lstset{alsolanguage=Python}
+\lstset{basicstyle=\small}
+\lstset{backgroundcolor=\color{white}}
+\lstset{frame=single}
+\lstset{stringstyle=\ttfamily}
+\lstset{keywordstyle=\color{red}\bfseries}
+\lstset{commentstyle=\itshape\color{blue}}
+\lstset{showspaces=false}
+\lstset{showstringspaces=false}
+\lstset{showtabs=false}
+\lstset{breaklines}
 
 
 
@@ -55,7 +71,11 @@ This is a short qualitative summary of the inner workings of the charge-coupled 
 
 A pixel of the CCD consists of three layers: a doped semiconductor layer (usually some silica), separated from a conducting material by some isolator. 
 
-\textbf{INSERT PIC}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{ccd.png}
+\caption{A (very) simple illustration of a CCD-chip}
+\end{figure}
 
 
 The isolating layer is characterized by some energy $E_g$ (g for gap). This gap energy is so that electrons from the semiconducting layer cant overcome it and transverse to the conduction layer. But should a photon hit an electron with higher energy then $E_g$, the electron can overcome the gap energy and reach the conduction layer. The wavelength needed to give the electron this energy is called the cut-off wavelength
@@ -80,7 +100,12 @@ a \sin(\theta) = m\lambda
 
 Where $a$ is the width of the slit, $m$ is the order of the minimum, $\theta$ is the angle to said minimum and $\lambda$ is the wavelength of the incoming light/laser.
 
-\emph{INSERT PIC}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{diffPattern.png}
+\caption{A crude illustration of the laser and slit. $l$ is the distance to the first minimum and $d$ the the distance from the slit to the CCD}
+\end{figure}
+
 
 If we look at the drawing, we see that the able $\theta$ is given as
 
@@ -88,7 +113,7 @@ If we look at the drawing, we see that the able $\theta$ is given as
 \tan \theta = \frac{l}{d}
 \end{equation}
 
-Where $l$ is the distance to first minimum. But this angle is small, so we can use the small angle approximation $\tan \theta \approx \theta$. The distance $l$ is also not completely known. We know the number of pixels from the center to the first minimum \emph{REF METHODS}, but we do not know how this relate to the actual distance. So we say that
+Where $l$ is the distance to first minimum. But this angle is small, so we can use the small angle approximation $\tan \theta \approx \theta$. The distance $l$ is also not completely known. We know the number of pixels from the center to the first minimum \ref{sec:setup}, but we do not know how this relate to the actual distance. So we say that
 
 \begin{equation}
 l = n_{pixels}\cdot c
@@ -226,7 +251,14 @@ Where $I_{corrected}$ is the cleaned image of the diffraction pattern.
 \section{Method}
 \label{sec:method}
 
-\subsection{Color Camera and White Light and Lens}
+\subsection{Color Camera, White Light and Lens}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{setupLight.png}
+\caption{A crude illustration of the setup for the white light.}
+\end{figure}
+
 For this first experiment a white light was shined on and focus by a thin single lens. In the focal point of the lens a microscope objective was placed. The focal point of the lens was fond by holding a piece white paper in front of the lens and finding the distance where the light is most concentrated. 
 
 The CCD was then placed in front of the objective. Here we wanted to look at the properties of the different colors in the white light, so a RGB CCD was used\footnote{For this a Edmund Optics color USB camera was used.}. 
@@ -243,6 +275,13 @@ Filters to filter out some of the colors in the white light was placed in front 
 \subsection{Monochromatic Camera and Single Slit}
 
 \subsubsection{Setup}
+\label{sec:setup}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{setupLaser.png}
+\caption{A crude illustration of the setup for the laser.}
+\end{figure}
 
 The white light was now switched out with a monochromatic red laser with wavelength $\lambda = (641 \pm 12.3)$ nm \emph{REF MY SELF}. To ensure that the laser didn't destroy the CCD, a damping filter was placed in front laser. Then a single slit with a width if $a = 100\mu m$ is placed in front of the laser the laser. The diffracted laser light was then captured by a monochromatic CCD\footnote{A monochromatic Edmund Optics USB camera}. 
 
@@ -269,7 +308,7 @@ First a bias frame and the maximum exposer dark frames has converted to an array
 
 To find the readout noise we first looked at the two bias frames. To exclude the possibility of strange results near the edge of the picture, a symmetric $300$x$300$ central part was extracted out of the to images and used. The two  images(the central parts) were then added, and the mean pixel value was found. This is the same value as $\bar{B}_1 + \bar{B}_2$\eqref{eq:meanB}. We then calculated the noise for the biases. This was done by first subtracting the images \ref{sec:noiseBias}, then finding the standard deviation of the resulting image $\sigma_{B_1 - B_2}$\eqref{eq:stdB1B2}.
 
-The same was then done for two flat frames \emph{WRITE WHICH}: first the central regions of the images were found. A mean of the sum of the images was found $\bar{F}_1 + \bar{F}_2$, and then the noise of the difference of the images was found $\sigma_{F_1 - F_2}$.
+The same was then done for two flat frames -- 2 and 4 -- : first the central regions of the images were found. A mean of the sum of the images was found $\bar{F}_1 + \bar{F}_2$, and then the noise of the difference of the images was found $\sigma_{F_1 - F_2}$.
 
 From this the conversion factor then consequently the readout noise can be calculated \eqref{eq:g}\\
 
@@ -282,7 +321,7 @@ First an average of the $16$ flat frames was found $F_{average}$. An average of 
 
 Secondly the dark frames corresponding to the image of the diffraction pattern was average to find $D_{I,raw,average}$. 
 
-Finally the final, clean image of the diffraction pattern was given as \emph{REF THOERY}
+Finally the final, clean image of the diffraction pattern was given as \eqref{eq:ICorr}:
 
 \begin{equation}
 I_{corrected} = \frac{I_{raw} - D_{I,raw,average}}{F_{norm. master}}
@@ -290,7 +329,7 @@ I_{corrected} = \frac{I_{raw} - D_{I,raw,average}}{F_{norm. master}}
 
 This was done both for the central 300x300 image and the full field of view.
 
-With a clean image of the diffraction pattern, the values of the middle of the images was plotted, and the distance, in pixels, to the first minima was found. From this distance the size of the pixels could be found \eqref{eq:pixelSize}. 
+
 
 \subsection{Uncertainties}
 
@@ -310,7 +349,7 @@ All of these uncertainties has been encompassed by a large, but fair uncertainty
 
 The distance from the slit to the camera was measured with a ruler. There was difficulty measuring this distance due to both the exact position of the slit and that of the CCD chip being obscured by their respective casings. So an uncertainty of $\pm 0.2$ cm was added.\\
 
-As will be discussed later \emph{REF DISCUSSION} the way we made the flat field was at best lacking. The bends in the paper, especially at the edges would lead to parts of the paper being darker than the uniform gradient we are looking for. But most grievous error done was taking the flat field without any slit or objective, as will be discussed later.
+As will be discussed later \ref{sec:disClean} the way we made the flat field was at best lacking. The bends in the paper, especially at the edges would lead to parts of the paper being darker than the uniform gradient we are looking for. But most grievous error done was taking the flat field without any slit or objective, as will be discussed later.
 
 
 
@@ -319,8 +358,23 @@ As will be discussed later \emph{REF DISCUSSION} the way we made the flat field 
 \section{Results}
 \label{sec:results}
 
+\subsection{Exposer Times}
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|c|c}
+ & Pixel Clock [Hz] & Frame Rate [fps] & Exposer [ms]\\
+ \hline
+Color Camera & 7 & 5.32 & 57.309\\
+Bias & 5 & 0.18 & 0.08\\
+Diffraction Pattern 1 & 40 & 20.61 & 0.08 \\ 
+Diffraction Pattern 2 & 40 & 20.61 & 0.124 \\
+Flat frames & 5 & 2.58 & 36.883
+\end{tabular}
+\end{table}
 
-\subsection{Color Camera and White Light and Lens}
+
+\subsection{Color Camera, White Light and Lens}
+\label{sec:resColor}
 Image of the full spectrum:
 
 \begin{figure}[H]
@@ -391,19 +445,24 @@ The highest pixel counts for the given images are
 \begin{table}[H]
 \centering
 \begin{tabular}{c | c | c | c}
-Color in focus & Red & Green & Blue \\
+Color in focus & Max Red & Max Green &Max Blue \\
 \hline
 Blue & $24$ & $137$ & $202$\\
 Red & $255$ & $255$ & $255$\\
 Green & $211$ & $255$ & $255$
 \end{tabular}
 \caption{The maximal pixel count for the different colors for the different focal points.}
+\label{tab:colorMaxMin}
 \end{table}
 
 
 
 
 \subsection{Monochromatic Camera and Single Slit}
+\label{sec:redMono}
+
+\subsubsection{Bias and Dark Frame}
+\label{sec:biasDark}
 
 We started by looking at one bias and the dark frame for the maximum exposer.
 
@@ -434,6 +493,7 @@ As we can see there are more or less the same. Lets look at some data about them
  Min Location & $(35, 528)$ & $(441, 84)$
 \end{tabular}
 \caption{Data about the bias and dark frame.}
+\label{tab:biasDark}
 \end{table}
 
 The distribution of pixel values for the two are given as
@@ -453,6 +513,9 @@ The distribution of pixel values for the two are given as
 \label{img:biasHist}
 \end{figure}
 
+\subsubsection{Bias, Flat Frame and Noise}
+\label{sec:biasFlat}
+
 For the analysis of the bias frames and two flat frames, the following data was obtained:
 
 \begin{table}[H]
@@ -464,6 +527,7 @@ Mean of sum & 17.99 & 141.80\\
 Noise & 95.43 & 122.39
 \end{tabular}
 \caption{Data for the central regions of the bias frames, and the second and forth flat frames.}
+\label{tab:biasFlat}
 \end{table}
 
 
@@ -486,7 +550,12 @@ And from a single bias frame the readout noise could be found
 
 Using all of the 16 flat frames, and seeing what this did to the noise, we got:
 
-
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{noisePairs.png}
+\caption{We can see as we use more and more pairs of flat frames, the noise decreases somewhere in order $1/\sqrt{n}$}
+\label{img:noisePairs}
+\end{figure}
 
 \subsubsection{Pixel Size}
 \label{sec:resPixSize}
@@ -542,15 +611,15 @@ After applying the cleaning procedure on the image we got the following result:
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.3]{corrected_image.png}
-\caption{A slice of the middle of the cleaned image of the diffraction pattern.}
-\label{img:slice}
+\caption{300x300 center part of the corrected image.}
+\label{img:corr}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.2]{corrected_image_fov.png}
-\caption{A slice of the middle of the cleaned image of the diffraction pattern.}
-\label{img:slice}
+\caption{The full field of view of the corrected image.}
+\label{img:corrFOV}
 \end{figure}
 
 
@@ -561,7 +630,40 @@ After applying the cleaning procedure on the image we got the following result:
 \section{Conclusions}
 \label{sec:conclusions}
 
+\subsection{Color Camera, White Light and Lens}
+As we saw in sec. \ref{sec:resColor} we got different colors due to the chromatic aberrations of the lens. This effect made it so that we could move the CCD into the focal point of the different colors, letting us isolate the different colors. If we then looked at the distribution of the mean pixel value of the different colors in the different (\ref{img:blue}, \ref{img:green} and \ref{img:red}) we saw that even though the images looked -- arguably -- monochromatic, all the colors contributed to some degree. This was most apparent for the green light, where both blue and red was abundant. We confirmed this by placing a red filter in front of the lamp, and while in the green focal point, the image lighted up red \ref{img:red_filter_green_focus}. Looking at table \ref{tab:colorMaxMin} we see that for the most part the color in focus has the largest maximum value. But it looks like we used a bit high exposer, making more that one color having the maximum pixel value (255) in some images. The strange part is that in the image of the green light we expected red to also have a high maximum pixel count, but as seen from the table blue has a higher maximum value than red. The reason for this remains unknown to the author, and requires more research.
+
+\subsection{Monochromatic Camera and Single Slit}
+\subsubsection{Bias and Dark Frame}
+As we can see from fig. \ref{img:bf1} and \ref{img:df_max} the dark frame and bias is quite similar --mostly black. This is due to them both being made in the same way, with the dust cover on the camera. But if we look at the maximum and minimum values we see some difference. The minima of the two images are more or less the same, but the maxima are far apart. This become more apparent from the distributions of pixel values, fig. \ref{img:biasHist} and \ref{img:darkHist}. Here we see that the dark frame has a larger share of higher pixel values. This may be due to the fact that the dark frame was recorded with the maximum exposer time, hence making the CCD more sensitive and recording higher pixel counts.
+
+\subsubsection{Bias, Flat Frame and Noise}
+From table \ref{tab:biasFlat} we see that both the bias and the flat frame has quite large mean and noise, but as expected those of the flat frames are higher -- since it is lit --. \\
+
+The value for $g = 0.0211$ [electrons/ADU] seems quite small, since this means that we need about $1/50$ electrons to get signal. This also makes the readout noise small, R.O.N$=0.0125$ electrons. Other teams have calculated readout noise of close to $100$ \footnote{Can not cite this since it is from other students rapports}. The author are not why this is the case, but think it may have to do with the exposer of the camera: that changing the exposer drastically increases the readout noise\footnote{Not sure if it will increase with increasing or decreasing exposer.}. The conversion factor also varies drastically with different flat frames, and for frame 1 and 2 a negative factor is obtained.\\
+
+If we look at fig. \ref{img:noisePairs} we see that we expected the noise to decrease with $1/\sqrt{n}$, but if we look at the actual noise it actually  decreases as $1/n$. The reason for this is unknown. It may simply be that we some noise in the noise, or that we have to few points to see that trend well. It may also be something wrong in the authors calculation of the noise. What ever the difference in the expected decrease and the calculated decrease, this is something that needs more research.
+
+\subsubsection{Pixel Size}
+We got a pixel size of $(5.45 \pm 0.32) \text{ }\mu$m, which is quite a good result, with a small uncertainty. But as discussed the number of pixels to the minimum may have been overestimated, and a larger uncertainty may be justified, or a better method of finding this distance needs to be found.\\
+
+A better slit is also needed, to get more straight lines in the diffraction pattern.
+
+\subsubsection{Cleaning the Scientific Image}
+\label{sec:disClean}
+As seen in fig. \ref{img:rawClean} there are a lot of impurities in the picture. The most noticeable being the diffraction patterns made by dust on the instruments. Most of these impurities can be improved by the flat field\footnote{Dark current and bias being so small that cleaning these will have only a small difference.}. But if we look at the cleaned figures \ref{img:corr} and \ref{img:corrFOV} we see little difference. The diffraction patterns from the dust particles are still there. This is due to the ineffective way we made the flat frames:
+
+Firstly: As discussed in under uncertainties, a piece of paper bends, making the flat frame less uniform. But the largest flaw was placing the paper right in front of the CCD. The dust observed in the images are most likely on the slit or objective. And since there were excluded from the flat frames, we have no way of correcting for these!
+
+So to get a better, cleaner image we have to go back into the laboratory and get better flat frames with the objective and slit.
 
 
+\begin{widetext}
+\newpage
+\section{Code}
+\label{sec:code}
+\textit{All the code have been tested on window 10, 64 bit, Python 3.5.2. The author can not guaranty that it will work on other computers and operating systems.}
+\lstinputlisting{image_processing.py}
+\end{widetext}
 
 \end{document}

@@ -16,7 +16,7 @@
 \BOOKMARK [3][-]{subsubsection.2.5.3}{Read Out Noise}{subsection.2.5}% 16
 \BOOKMARK [3][-]{subsubsection.2.5.4}{Cleaning the Image}{subsection.2.5}% 17
 \BOOKMARK [1][-]{section.3}{Method}{}% 18
-\BOOKMARK [2][-]{subsection.3.1}{Color Camera and White Light and Lens}{section.3}% 19
+\BOOKMARK [2][-]{subsection.3.1}{Color Camera, White Light and Lens}{section.3}% 19
 \BOOKMARK [2][-]{subsection.3.2}{Monochromatic Camera and Single Slit}{section.3}% 20
 \BOOKMARK [3][-]{subsubsection.3.2.1}{Setup}{subsection.3.2}% 21
 \BOOKMARK [3][-]{subsubsection.3.2.2}{Statistical Analysis}{subsection.3.2}% 22
@@ -24,8 +24,18 @@
 \BOOKMARK [3][-]{subsubsection.3.3.1}{Color Camera and White Light and Lens}{subsection.3.3}% 24
 \BOOKMARK [3][-]{subsubsection.3.3.2}{Monochromatic Camera and Single Slit}{subsection.3.3}% 25
 \BOOKMARK [1][-]{section.4}{Results}{}% 26
-\BOOKMARK [2][-]{subsection.4.1}{Color Camera and White Light and Lens}{section.4}% 27
-\BOOKMARK [2][-]{subsection.4.2}{Monochromatic Camera and Single Slit}{section.4}% 28
-\BOOKMARK [3][-]{subsubsection.4.2.1}{Pixel Size}{subsection.4.2}% 29
-\BOOKMARK [3][-]{subsubsection.4.2.2}{Cleaning the Scientific Image}{subsection.4.2}% 30
-\BOOKMARK [1][-]{section.5}{Conclusions}{}% 31
+\BOOKMARK [2][-]{subsection.4.1}{Exposer Times}{section.4}% 27
+\BOOKMARK [2][-]{subsection.4.2}{Color Camera, White Light and Lens}{section.4}% 28
+\BOOKMARK [2][-]{subsection.4.3}{Monochromatic Camera and Single Slit}{section.4}% 29
+\BOOKMARK [3][-]{subsubsection.4.3.1}{Bias and Dark Frame}{subsection.4.3}% 30
+\BOOKMARK [3][-]{subsubsection.4.3.2}{Bias, Flat Frame and Noise}{subsection.4.3}% 31
+\BOOKMARK [3][-]{subsubsection.4.3.3}{Pixel Size}{subsection.4.3}% 32
+\BOOKMARK [3][-]{subsubsection.4.3.4}{Cleaning the Scientific Image}{subsection.4.3}% 33
+\BOOKMARK [1][-]{section.5}{Conclusions}{}% 34
+\BOOKMARK [2][-]{subsection.5.1}{Color Camera, White Light and Lens}{section.5}% 35
+\BOOKMARK [2][-]{subsection.5.2}{Monochromatic Camera and Single Slit}{section.5}% 36
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Bias and Dark Frame}{subsection.5.2}% 37
+\BOOKMARK [3][-]{subsubsection.5.2.2}{Bias, Flat Frame and Noise}{subsection.5.2}% 38
+\BOOKMARK [3][-]{subsubsection.5.2.3}{Pixel Size}{subsection.5.2}% 39
+\BOOKMARK [3][-]{subsubsection.5.2.4}{Cleaning the Scientific Image}{subsection.5.2}% 40
+\BOOKMARK [1][-]{section.6}{Code}{}% 41

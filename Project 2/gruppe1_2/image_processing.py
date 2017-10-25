@@ -98,16 +98,16 @@ class image_processor:
         
 
     def get_noise(self,image_names, save=False):
-        even_sum = self.read_image(image_names[0])
-        odd_sum = self.read_image(image_names[1])
+        even_sum = self.read_image(image_names[0],fullFOV=False)
+        odd_sum = self.read_image(image_names[1],fullFOV=False)
 
         if save:
             noises= np.zeros(int(len(image_names)/2))
             noises[0] = self.get_std(odd_sum-even_sum)
 
         for i in range(2,len(image_names),2):
-            even_sum += self.read_image(image_names[i])
-            odd_sum += self.read_image(image_names[i+1])
+            even_sum += self.read_image(image_names[i],fullFOV=False)
+            odd_sum += self.read_image(image_names[i+1],fullFOV=False)
             if save:
                noises[int(i/2)] = self.get_std(odd_sum-even_sum) /(i/2)
 
@@ -251,6 +251,7 @@ if __name__=="__main__":
     expected_noise = noise[0]*1/np.sqrt(ns)
     plt.plot(ns,noise,label="Actual")
     plt.plot(ns,expected_noise,label="Expected")
+    plt.legend()
     plt.title("Noise of the Flat Frames")
     plt.xlabel("Number of Pairs n")
     plt.ylabel(r"Normalized Noise $\sigma_{(F_1 + \ldots F_{2n})- (F_2 + \ldots F_{2n+1})}/n$")
@@ -273,18 +274,14 @@ if __name__=="__main__":
 
     ip.plot_picture_slice("3_1")
 
-    #ip.plot_color_hist("rød fokus")
+    #ip.plot_color_hist("rod_fokus")
     print("For Green Focus:")
-    ip.plot_highest_row_color("grønt fokus",title="Distribution for Green Light")
+    ip.plot_highest_row_color("gront_fokus",title="Distribution for Green Light")
     print("For Red Focus:")
-    ip.plot_highest_row_color("rød fokus",title="Distribution for Red Light")
+    ip.plot_highest_row_color("rod_fokus",title="Distribution for Red Light")
     print("For Blue Focus:")
-    ip.plot_highest_row_color("blått",title="Distribution for Blue Light")
+    ip.plot_highest_row_color("blatt",title="Distribution for Blue Light")
     
     ip.convert_images(["df_max_exp"])
 
-    """
-    Vi lagde flat field ved å sette ark foran kameraet,
-    men det kan være støy på linsen, hvilket da ikke kommer med
-    på flat fielden!!!!!!!!
-    """
+ 
