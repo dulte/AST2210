@@ -9,7 +9,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{listings}
 \usepackage{color}
-\usepackage{lipsum}
+\usepackage{url}
+
 
 \lstset{language=c++}
 \lstset{alsolanguage=[90]Fortran}
@@ -29,25 +30,37 @@
 
 \begin{document}
 
-\title{A spectacular title}
+\title{Colors on a CCD; cleaning an image and using a diffraction pattern to find the pixel size.}
 
 \author{Daniel Heinesen}
 
 \email{daniel.heinesen@sf-nett.no}
 
-%\altaffiltext{1}{Institute of Theoretical Astrophysics, University of
- % Oslo, P.O.\ Box 1029 Blindern, N-0315 Oslo, Norway}
+\altaffiltext{1}{Institute of Theoretical Astrophysics, University of
+  Oslo, P.O.\ Box 1029 Blindern, N-0315 Oslo, Norway}
 
 
 %\date{Received - / Accepted -}
 
 \begin{abstract}
-  State problem. Briefly describe method and data. Summarize main results.
+  In this article we are looking at the new imaging tool charge coupled device. First we looked at how white light was separated to it constituent colors when passing through a lens, and how the CCD captured this. This was done by sending white light through a thin lens and an objective. We saw how due to aberrations in the lens we got different colors focusing at different distances from the lens. Even though the focused light look at a first glans to be monochromatic, most of the colors are present in some amount. We then pointed a laser on a single slit, making a diffraction pattern on the CCD. We could use this diffraction pattern to find a pixel size of $(5.45 \pm 0.32)\text{ }\mu\text{m}$. We also looked at the different noises made by imperfections in the instruments: the bias, dark current and flat field. We used multiple flat frames taken with uniform light to see that the more flat frames the more the noise decreased. An ideal decrease would have been on the order $1/\sqrt{n}$, but out data showed closer to $1/n$. Lastly we cleaned an image of the diffraction pattern with the use of flat frames and dark frames. The corrected image showed little to no difference, which may have been to the flaw in setting up the flat frame.
 \end{abstract}
-\keywords{cosmic microwave background --- cosmology: observations --- methods: statistical}
+\keywords{Charge-coupled devise --- CCD --- Pixel Size --- Single Slit --- Lens --- Image cleaning --- Flat field --- Dark Frame --- Bias}
 
 \section{Introduction}
 \label{sec:introduction}
+
+In this article we are going to look at some properties of the charge-coupled device, CCD. This is a new method of capturing light using CMOS semiconductors to convert photons in to an electric current. The CCD had $50-90\%$ efficiency, compared to the $\sim 1\%$ efficiency for normal photographic plates. This means that CCDs may revolutionize the way we observe the universe. \\
+
+CCD-chips are able to capturing red, green and blue light, and therefore able to replicate any colors the observed object may have. A white light shined through a thin lens will make a diffraction patter, and an Airy disk. The lens will also separate the white light into its constitute colors, due to chromatic aberrations. We are going to look at the different focal points of these colors. The light captured may look monochromatic, but as we shall see, red, green and blue are always there, in some amount or another. \\
+
+We are then going to change the color camera with a monochromatic camera, and the lens with a slit. This will make diffraction pattern on the CCD. With the use of this diffraction pattern it is possible to find the size of the pixels.\\
+
+Due to imperfections in the CCD and other instruments there will be noise in the images: the bias(noise in the electronics), dark current(current due to thermal effects) and flat field(imperfections in the pixels and in the other instruments) . We will especially look at the noise made by the bias  and flat field , and how we can decrease this noise be using many flat frames. \\
+
+By isolating images of the bias, dark current and flat field, it is possible to correct for these imperfections and get a clearer image. We will use this to clean the image of the diffraction pattern.
+
+
 
 \section{Theory}
 \label{sec:theory}
@@ -139,6 +152,8 @@ c \approx \frac{m\lambda d}{n_{pixels}a}
 \end{equation}
 
 
+$n_{pixels}$ will be found be plotting a slice of the middle of an image of the a diffraction patter. The value for $n_{pixels}$ can then be read from the plot.
+
 \subsection{Different Cleaning Frame}
 
 The three types of 'cleaning images'\footnote{for a lack of a better name}:
@@ -149,7 +164,7 @@ When using a CCD there are a lot of electronics involved. The signal travels tho
 The bias is additive, meaning that to remove it we need to quantify  the bias, then subtract it from the scientific image. To quantify the bias we take pictures without any light hitting the CCD, capturing only the signal from the electronics.\footnote{We will also capture the dark current, but for simplicity this is ignored.}
 
 \subsubsection{Dark Current}
-As mentioned in sec. \ref{sec:ccd} the barrier between the semiconductor and conducting layer is given as an energy $E_g$. Ideally this energy gap is so large that no electron will wander across it unless exited by a photon. But this is a quantum system it is never that easy. The energy of the electron follows a Fermi-Dirac distribution \emph{REF}
+As mentioned in sec. \ref{sec:ccd} the barrier between the semiconductor and conducting layer is given as an energy $E_g$. Ideally this energy gap is so large that no electron will wander across it unless exited by a photon. But this is a quantum system it is never that easy. The energy of the electron follows a Fermi-Dirac distribution \citep{wiki:fermi}
 
 \begin{equation}
 P(E,T) = \frac{1}{1 + e^{(E-E_f)/kT}}
@@ -171,7 +186,7 @@ To clean the images we want ideal flat field, dark frames and bias frames. But t
 
 \subsubsection{Noise of the Bias}
 \label{sec:noiseBias}
-For the bias frames we wan to look at just the noise which is not constant. We therefore subtract the two bias frames $B_1 - B_2$. This removes all the constant noise, leaving us with only the undesired variable noise. We can then find the standard deviation of this $\sigma_{B_1 - B_2}$. If we look at the addition rules of variance \emph{REF} we see
+For the bias frames we wan to look at just the noise which is not constant. We therefore subtract the two bias frames $B_1 - B_2$. This removes all the constant noise, leaving us with only the undesired variable noise. We can then find the standard deviation of this $\sigma_{B_1 - B_2}$. If we look at the addition rules of variance \citep{wiki:var} we see
 
 \begin{equation}
 Var(aX - bY) = a^2Var(X) + b^2Var(b)
@@ -192,7 +207,7 @@ We expect that the noise in the bias frames should be constant over time, so the
 
 Then thus we see that the standard deviation of the difference of the biases are $\sqrt{2}$ times that of a single bias frame.
 
-We can also look at the mean of the sum of the two bias frames. Since the mean is linear \emph{REF} we get that
+We can also look at the mean of the sum of the two bias frames. Since the mean is linear we get that
 
 \begin{equation}
 E(B_1 + B_2) = E(B_1) + E(B_2)
@@ -219,7 +234,7 @@ If we now use the same relationship as in \eqref{eq:stdB1B2} we see what we want
 \frac{\sigma_{(F_1 + \ldots F_{2n})- (F_2 + \ldots F_{2n+1})}}{n} = \frac{\sqrt{n}\sigma_F}{n} = \frac{\sigma_F}{\sqrt{n}}
 \end{equation}
 
-So we see that as we include more flat frames, the random noise decreases as $1/\sqrt{n}$, and we are left with a more clean flat frame, which can be used to clean our science image.
+So we see that as we include more flat frames, the random noise decreases as $1/\sqrt{n}$, and we are left with a more clean flat frame, which can be used to clean our science image. One would at first think that the noise would increase as $\sqrt{n}$ for each flat frame added, but due the normalization, the noise decrease instead.
 
 \subsubsection{Read Out Noise}
 
@@ -240,7 +255,7 @@ Which bias frame is used for this should ideally be the same, since we expect ti
 
 \subsubsection{Cleaning the Image}
 \label{sec:cleaning}
-To clean the image we want to remove the effects made be the dark current and flat frame. As mentioned \emph{REF} the dark current is additive while the flat field is multiplicative. To remove the noise from the the dark and flat frames, we take the average of multiple frames. But the flat frames do also have dark current, so we need to subtract the the corresponding average dark frame from the average flat frame and normalize it. This is the normalized flat frame. We can then simply clean the raw scientific image of the diffraction pattern by first subtract the average dark frame $D_{I,raw,average}$ and divide by the normalized master flat frame $F_{norm. master}$
+To clean the image we want to remove the effects made be the dark current and flat frame. As mentioned the dark current is additive while the flat field is multiplicative. To remove the noise from the the dark and flat frames, we take the average of multiple frames. But the flat frames do also have dark current, so we need to subtract the the corresponding average dark frame from the average flat frame and normalize it. This is the normalized flat frame. We can then simply clean the raw scientific image of the diffraction pattern by first subtract the average dark frame $D_{I,raw,average}$ and divide by the normalized master flat frame $F_{norm. master}$
 
 \begin{equation}
 I_{corrected} = \frac{I_{raw} - D_{I,raw,average}}{F_{norm. master}}
@@ -267,7 +282,7 @@ We could now use out Graphical User Interface(GUI) to look at the resulting patt
 
 The GUI gave the possibility of viewing the pixel count of a slice of the image, for the different colors. These values were not saved, but the image itself was. The images was then used to make a plot showing the mean pixel count of each color over each column.
 
-The GUI of the CCD also allowed us to adjust the pixel count, frame rate and exposure time, giving us the ability to study the effect this had on the picture.
+The GUI of the CCD also allowed us to adjust the pixel clock, frame rate and exposure time, giving us the ability to study the effect this had on the picture.
 
 Filters to filter out some of the colors in the white light was placed in front of the light, so we could look on the effect this would have on the light on the CCD. 
 
@@ -283,7 +298,7 @@ Filters to filter out some of the colors in the white light was placed in front 
 \caption{A crude illustration of the setup for the laser.}
 \end{figure}
 
-The white light was now switched out with a monochromatic red laser with wavelength $\lambda = (641 \pm 12.3)$ nm \emph{REF MY SELF}. To ensure that the laser didn't destroy the CCD, a damping filter was placed in front laser. Then a single slit with a width if $a = 100\mu m$ is placed in front of the laser the laser. The diffracted laser light was then captured by a monochromatic CCD\footnote{A monochromatic Edmund Optics USB camera}. 
+The white light was now switched out with a monochromatic red laser with wavelength $\lambda = (641 \pm 12.3)$ nm \cite{laser}. To ensure that the laser didn't destroy the CCD, a damping filter was placed in front laser. Then a single slit with a width if $a = 100\mu m$ is placed in front of the laser the laser. The diffracted laser light was then captured by a monochromatic CCD\footnote{A monochromatic Edmund Optics USB camera}. 
 
 The camera and slit was then adjusted until a sharp diffraction pattern appeared in the middle of the computer screen. The distance from the slit to the CCD was so measured carefully with a ruler. Two images image of the diffraction pattern were then taken. One with lower exposer used to calculate the pixel size, described here \ref{sec:pixSize}. The other one, with higher exposer, was used to test out the cleaning procedure \ref{sec:cleaning}.
 
@@ -302,7 +317,7 @@ To clean the picture the following series of pictures were taken \ref{sec:cleani
 The flat frames are takes as follows: The dust cover was removed, then a white piece of paper was placed in front of the CCD and a white light was shined on the paper. The white paper ensured a homogeneous, white gradient over the whole CCD chip. With these axillary pictures we could clean the picture of the diffraction pattern.
 
 \subsubsection{Statistical Analysis}
-This part was done in Python\emph{REF CODE}, but could be found with most other scripting languages, like R or IDL:
+This part was done in Python\ref{sec:code}, but could be found with most other scripting languages, like R or IDL:
 
 First a bias frame and the maximum exposer dark frames has converted to an array. From these arrays the max, min, mean and distribution of the pixel values was found and compared. \\
 
@@ -313,7 +328,7 @@ The same was then done for two flat frames -- 2 and 4 -- : first the central reg
 From this the conversion factor then consequently the readout noise can be calculated \eqref{eq:g}\\
 
 To see how the number of flat frames taken improved the normalized noise, the following was calculated with the same approach as the noise above:
-$\sigma_{F_1-F_2}$, $\sigma_{(F_1 + F_3) - (F_2+F_4)}$ and so on until all the flat frames were used. For each time a new $\sigma$ as calculated it was normalized with the number of pairs of flat frames used, then saved. The saved values for the noises were then plotted and compared.\\
+$\sigma_{F_1-F_2}$, $\sigma_{(F_1 + F_3) - (F_2+F_4)}$ and so on until all the flat frames were used. For each time a new $\sigma$ was calculated it was normalized with the number of pairs of flat frames used, then saved. The saved values for the noises were then plotted and compared.\\
 
 To clean the image of the diffraction pattern we generally want to subtract away the noise from the dark frames, and divide away the noise from the flat frames. This was done as follows:
 
@@ -423,21 +438,21 @@ These images gave the following distribution:
 \centering
 \includegraphics[scale=0.3]{blueDist.png}
 \caption{The distribution of the average pixel count for the different colors when in the focal point of the blue light. We can see that blue is dominating, but there are still quite a lot of green light.}
-\label{img:green}
+\label{img:blueDist}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.3]{redDist.png}
 \caption{The distribution of the average pixel count for the different colors when in the focal point of the red light. We see that red is dominating, while blue is almost non-existent}
-\label{img:green}
+\label{img:redDist}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.3]{greenDist.png}
 \caption{The distribution of the average pixel count for the different colors when in the focal point of the green light. We see that while green has the largest average pixel count, red is close behind and for most of the image higher than green.}
-\label{img:green}
+\label{img:greenDist}
 \end{figure}
 
 The highest pixel counts for the given images are
@@ -548,7 +563,7 @@ And from a single bias frame the readout noise could be found
 \end{equation}
 
 
-Using all of the 16 flat frames, and seeing what this did to the noise, we got:
+Using all of the 16 flat frames, we got the following result for the decrease in noise as a function of flat frames used:
 
 \begin{figure}[H]
 \centering
@@ -584,7 +599,7 @@ If we look at the plot there are about 200 pixels from minimum to minimum, meani
 n_{pixels} = 100\pm 5
 \end{equation}
 
-We can then use \eqref{eq:pixelSize} to find the size of the pixels. We use that $m = 1$, $\lambda (641 \pm 12.3)$ nm \emph{REF MYSELF}, $a = 100 \mu m$ and $d = (8.5 \pm 0.2)$ cm:
+We can then use \eqref{eq:pixelSize} to find the size of the pixels. We use that $m = 1$, $\lambda (641 \pm 12.3)$ nm \cite{laser}, $a = 100 \mu m$, and the measured distance from the slit to the CCD was $d = (8.5 \pm 0.2)$ cm:
 
 \begin{equation}
 c =  \frac{(641 \pm 12.3) \text{ nm} (8.5 \pm 0.2) \text{ cm}}{100\pm 5 \cdot100 \mu m} = (5.45 \pm 0.32)\text{ }\mu\text{m}
@@ -631,23 +646,25 @@ After applying the cleaning procedure on the image we got the following result:
 \label{sec:conclusions}
 
 \subsection{Color Camera, White Light and Lens}
-As we saw in sec. \ref{sec:resColor} we got different colors due to the chromatic aberrations of the lens. This effect made it so that we could move the CCD into the focal point of the different colors, letting us isolate the different colors. If we then looked at the distribution of the mean pixel value of the different colors in the different (\ref{img:blue}, \ref{img:green} and \ref{img:red}) we saw that even though the images looked -- arguably -- monochromatic, all the colors contributed to some degree. This was most apparent for the green light, where both blue and red was abundant. We confirmed this by placing a red filter in front of the lamp, and while in the green focal point, the image lighted up red \ref{img:red_filter_green_focus}. Looking at table \ref{tab:colorMaxMin} we see that for the most part the color in focus has the largest maximum value. But it looks like we used a bit high exposer, making more that one color having the maximum pixel value (255) in some images. The strange part is that in the image of the green light we expected red to also have a high maximum pixel count, but as seen from the table blue has a higher maximum value than red. The reason for this remains unknown to the author, and requires more research.
+As we saw in sec. \ref{sec:resColor} we got different colors due to the chromatic aberrations of the lens. This effect made it so that we could move the CCD into the focal point of the different colors, letting us isolate the different colors. If we move the lens and camera so to remove the coma, a diffraction pattern can be observed. This is quite faint, but we can see a halo effect around the dot in the middle, which is due to the diffraction.
+
+ If we then looked at the distribution of the mean pixel value of the different colors in the different focal points (\ref{img:blueDist}, \ref{img:greenDist} and \ref{img:redDist}) we saw that even though the images looked -- arguably -- monochromatic, all the colors contributed to some degree. This was most apparent for the green light, where both blue and red was abundant. We confirmed this by placing a red filter in front of the lamp, and while in the green focal point, the image lighted up red \ref{img:red_filter_green_focus}. Looking at table \ref{tab:colorMaxMin} we see that for the most part the color in focus has the largest maximum value. But it looks like we used a bit high exposer, making more that one color having the maximum pixel value (255) in some images. The strange part is that in the image of the green light we expected red to also have a high maximum pixel count, but as seen from the table blue has a higher maximum value than red. The reason for this remains unknown to the author, and requires more research.
 
 \subsection{Monochromatic Camera and Single Slit}
 \subsubsection{Bias and Dark Frame}
-As we can see from fig. \ref{img:bf1} and \ref{img:df_max} the dark frame and bias is quite similar --mostly black. This is due to them both being made in the same way, with the dust cover on the camera. But if we look at the maximum and minimum values we see some difference. The minima of the two images are more or less the same, but the maxima are far apart. This become more apparent from the distributions of pixel values, fig. \ref{img:biasHist} and \ref{img:darkHist}. Here we see that the dark frame has a larger share of higher pixel values. This may be due to the fact that the dark frame was recorded with the maximum exposer time, hence making the CCD more sensitive and recording higher pixel counts.
+As we can see from fig. \ref{img:bf1} and \ref{img:df_max} the dark frame and bias is quite similar --mostly black. This is due to them both being made in the same way, with the dust cover on the camera. But if we look at the maximum and minimum values we see some difference. The minima of the two images are more or less the same, but the maxima are far apart. They are also not located at the same place, which should not be expected, since at least dark current is random in nature. This become more apparent from the distributions of pixel values, fig. \ref{img:biasHist} and \ref{img:darkHist}. Here we see that the dark frame has a larger share of higher pixel values. This may be due to the fact that the dark frame was recorded with the maximum exposer time, hence making the CCD more sensitive and recording higher pixel counts.
 
 \subsubsection{Bias, Flat Frame and Noise}
 From table \ref{tab:biasFlat} we see that both the bias and the flat frame has quite large mean and noise, but as expected those of the flat frames are higher -- since it is lit --. \\
 
-The value for $g = 0.0211$ [electrons/ADU] seems quite small, since this means that we need about $1/50$ electrons to get signal. This also makes the readout noise small, R.O.N$=0.0125$ electrons. Other teams have calculated readout noise of close to $100$ \footnote{Can not cite this since it is from other students rapports}. The author are not why this is the case, but think it may have to do with the exposer of the camera: that changing the exposer drastically increases the readout noise\footnote{Not sure if it will increase with increasing or decreasing exposer.}. The conversion factor also varies drastically with different flat frames, and for frame 1 and 2 a negative factor is obtained.\\
+The value for $g = 0.0211$ [electrons/ADU] seems quite small, since this means that we need about $1/50$ electrons to get signal. This also makes the readout noise small, R.O.N$=0.0125$ electrons. Other teams have calculated readout noise of close to $100$ \footnote{Can not cite this since it is from other students rapports}. The author are not sure why this is the case, but think it may have to do with the exposer of the camera: that changing the exposer drastically increases the readout noise\footnote{Not sure if it will increase with increasing or decreasing exposer.}. The conversion factor also varies drastically with different flat frames, and for frame 1 and 2 a negative factor is obtained. Why this is the case may also need further research.\\
 
 If we look at fig. \ref{img:noisePairs} we see that we expected the noise to decrease with $1/\sqrt{n}$, but if we look at the actual noise it actually  decreases as $1/n$. The reason for this is unknown. It may simply be that we some noise in the noise, or that we have to few points to see that trend well. It may also be something wrong in the authors calculation of the noise. What ever the difference in the expected decrease and the calculated decrease, this is something that needs more research.
 
 \subsubsection{Pixel Size}
 We got a pixel size of $(5.45 \pm 0.32) \text{ }\mu$m, which is quite a good result, with a small uncertainty. But as discussed the number of pixels to the minimum may have been overestimated, and a larger uncertainty may be justified, or a better method of finding this distance needs to be found.\\
 
-A better slit is also needed, to get more straight lines in the diffraction pattern.
+A better slit is also needed, to get more straight lines in the diffraction pattern. Better data on the wavelength of the laser will also give better results. Our wavelength was taken from only one source \cite{laser}, but in future calculations more samples of the wavelength should be used.
 
 \subsubsection{Cleaning the Scientific Image}
 \label{sec:disClean}
@@ -655,7 +672,13 @@ As seen in fig. \ref{img:rawClean} there are a lot of impurities in the picture.
 
 Firstly: As discussed in under uncertainties, a piece of paper bends, making the flat frame less uniform. But the largest flaw was placing the paper right in front of the CCD. The dust observed in the images are most likely on the slit or objective. And since there were excluded from the flat frames, we have no way of correcting for these!
 
-So to get a better, cleaner image we have to go back into the laboratory and get better flat frames with the objective and slit.
+So to get a better, cleaner image we have to go back into the laboratory and get better flat frames with the objective and slit.\\
+
+All in all the CCD has shown it self to be the future of image capturing -- especially if we manage to clean it correctly with the bias, dark and flat frames -- both due to it efficiency, but also due to its cheap price and ease of operation.
+
+
+\bibliography{ref}
+
 
 
 \begin{widetext}
