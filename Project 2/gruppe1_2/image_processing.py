@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Oct 14 13:49:42 2017
+
+@author: Daniel
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
@@ -26,8 +33,10 @@ class image_processor:
         return np.array(ims)
 
     def make_histogram(self,image, title=""):
-        n, bins, patches = plt.hist(image)
+        n, bins, patches = plt.hist(image.flatten(),normed=True)
         plt.title(title)
+        plt.xlabel("Pixel Value")
+        plt.ylabel("Distribution")
         plt.show()
 
     def get_extrema(self, image):
@@ -79,6 +88,14 @@ class image_processor:
         b_mean,b_std = self.process_image_mean_and_noise(bias_names)
 
         return (f_mean - b_mean)/(f_std**2 - b_std**2)
+    
+    def get_RON(self,bias_names,flat_names):
+        bias_noise = np.std(self.read_image(bias_names[0]))
+        g = self.get_g(bias_names,flat_names)
+        print(bias_noise)
+        
+        return g*bias_noise
+        
 
     def get_noise(self,image_names, save=False):
         even_sum = self.read_image(image_names[0])
@@ -86,24 +103,24 @@ class image_processor:
 
         if save:
             noises= np.zeros(int(len(image_names)/2))
-            noises[0] = self.get_std(even_sum-odd_sum)
+            noises[0] = self.get_std(odd_sum-even_sum)
 
         for i in range(2,len(image_names),2):
             even_sum += self.read_image(image_names[i])
             odd_sum += self.read_image(image_names[i+1])
             if save:
-               noises[int(i/2)] = self.get_std(even_sum-odd_sum) /(i/2)
+               noises[int(i/2)] = self.get_std(odd_sum-even_sum) /(i/2)
 
         if save:
-            return noises, self.get_std(even_sum-odd_sum)
+            return noises, self.get_std(odd_sum-even_sum)
 
-        return self.get_std(even_sum-odd_sum)
+        return self.get_std(odd_sum-even_sum)
 
     def get_picture_slice(self,name):
         if isinstance(name,np.ndarray):
             data = name
         else:
-            data = self.read_image(name,fullFOV=False)
+            data = self.read_image(name,fullFOV=True)
 
         return data[int(data.shape[0]/2),:]
 
@@ -196,8 +213,8 @@ if __name__=="__main__":
     bias = ip.read_image("bf1")
     dark = ip.read_image("df_max_exp")
 
-    #ip.make_histogram(bias,title="Bias")
-    #ip.make_histogram(dark,title="Dark Frame")
+    ip.make_histogram(bias,title="Histogram for the Bias")
+    ip.make_histogram(dark,title="Histogram for the Dark Frame")
 
     print("For bias: min = {}, max = {}".format(ip.get_extrema(bias)[0],ip.get_extrema(bias)[1]))
     print("For dark frame: min = {}, max = {}".format(ip.get_extrema(dark)[0],ip.get_extrema(dark)[1]))
@@ -207,24 +224,54 @@ if __name__=="__main__":
 
     print("For bias: mean = {}".format(ip.get_mean(bias)))
     print("For dark frame: mean = {}".format(ip.get_mean(dark)))
+    
+    print("Statistics for bias and flat")
+    print("----------------------------")
+    
+    bias_mean, bias_std = ip.process_image_mean_and_noise(["bf1","bf2"])
+    flat_mean, flat_std = ip.process_image_mean_and_noise(["ff2","ff4"])
+    
+    print("For bias: mean = {}, std = {}".format(bias_mean,bias_std))
+    print("For flat: mean = {}, std = {}".format(flat_mean,flat_std))
+    
 
 
+    
+
+
+    print("The convertion constant: g = ",ip.get_g(["bf1","bf2"],["ff2","ff4"]))
+    print("The readout noise RON = ",ip.get_RON(["bf1","bf2"],["ff2","ff4"]))
+    
+    print("Plotting noise over flates")
+    print("--------------------------")
+    
     flat_frames = ["ff" + str(i) for i  in range(1,17)]
-
-    print("The noise of the two flat fields: ",ip.get_noise(["ff2","ff3"]))
-
-    print("The convertion constant: g = ",ip.get_g(["bf1","bf2"],["ff1","ff3"]))
-
-    plt.plot(ip.get_noise(flat_frames,save=True)[0])
+    ns = np.arange(1,9)
+    noise = ip.get_noise(flat_frames,save=True)[0]
+    expected_noise = noise[0]*1/np.sqrt(ns)
+    plt.plot(ns,noise,label="Actual")
+    plt.plot(ns,expected_noise,label="Expected")
+    plt.title("Noise of the Flat Frames")
+    plt.xlabel("Number of Pairs n")
+    plt.ylabel(r"Normalized Noise $\sigma_{(F_1 + \ldots F_{2n})- (F_2 + \ldots F_{2n+1})}/n$")
     plt.show()
-    raw = "3_1"
+    
+    print("Cleaning")
+    print("--------")
+    
+    
+    raw = "3_2"
     raw_darks = ["df" + str(i) + "_4" for i in range(1,6)]
     flat_frames = ["ff" + str(i) for i  in range(1,17)]
     flat_darks = ["df_ff" + str(i) for i in range(1,6)]
-    corr_I = ip.clean_image(raw,raw_dark_names=raw_darks,flat_names=flat_frames,flat_dark_names=flat_darks,fullFOV=False)
-    ip.save_image(corr_I,"corrected_image.png")
+    corr_I = ip.clean_image(raw,raw_dark_names=raw_darks,flat_names=flat_frames,flat_dark_names=flat_darks,fullFOV=True)
+    #ip.save_image(corr_I,"corrected_image_fov.png")
+    
+    
+    print("Slicing and Color Images")
+    print("------------------------")
 
-    ip.plot_picture_slice(corr_I)
+    ip.plot_picture_slice("3_1")
 
     #ip.plot_color_hist("rød fokus")
     print("For Green Focus:")
@@ -234,7 +281,7 @@ if __name__=="__main__":
     print("For Blue Focus:")
     ip.plot_highest_row_color("blått",title="Distribution for Blue Light")
     
-    #ip.convert_images(["rødt filter grønt fokus"])
+    ip.convert_images(["df_max_exp"])
 
     """
     Vi lagde flat field ved å sette ark foran kameraet,

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2017.4.3)  25 OCT 2017 01:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2017.4.3)  25 OCT 2017 20:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -757,7 +757,10 @@ LaTeX Warning: Label `img:green' multiply defined.
 LaTeX Warning: Label `img:green' multiply defined.
 
 
-LaTeX Warning: Label `img:green' multiply defined.
+LaTeX Warning: Label `img:slice' multiply defined.
+
+
+LaTeX Warning: Label `img:slice' multiply defined.
 
 )
 \openout1 = `daniel_heinesen_lab2.aux'.
@@ -846,119 +849,168 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 33.
 (c:/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1{c:/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Underfull \hbox (badness 2478) in paragraph at lines 246--247
+Underfull \hbox (badness 2478) in paragraph at lines 247--248
 []\OT1/cmr/m/n/10 The white light was now switched out with a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 248--249
+Underfull \hbox (badness 10000) in paragraph at lines 252--253
 
  []
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 252.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 256.
 
 (c:/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 252.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 256.
 
-Underfull \hbox (badness 10000) in paragraph at lines 264--265
+Underfull \hbox (badness 10000) in paragraph at lines 268--269
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 270--271
+Underfull \hbox (badness 10000) in paragraph at lines 274--275
 
  []
 
 
-Underfull \hbox (badness 1648) in paragraph at lines 272--274
+Underfull \hbox (badness 1648) in paragraph at lines 276--278
 \OT1/cmr/m/n/10 the nor-mal-ized noise, the fol-low-ing was cal-cu-lated
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--274
+Underfull \hbox (badness 10000) in paragraph at lines 276--278
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 307--308
+Underfull \hbox (badness 10000) in paragraph at lines 311--312
 
  []
 
-<spekter.png, id=198, 754.82pt x 481.8pt>
+<spekter.png, id=208, 754.82pt x 481.8pt>
 File: spekter.png Graphic file (type png)
  <use spekter.png>
-Package pdftex.def Info: spekter.png used on input line 324.
+Package pdftex.def Info: spekter.png used on input line 328.
 (pdftex.def)             Requested size: 150.96132pt x 96.35829pt.
 
-<blatt.png, id=199, 754.82pt x 481.8pt>
+<blatt.png, id=209, 754.82pt x 481.8pt>
 File: blatt.png Graphic file (type png)
  <use blatt.png>
-Package pdftex.def Info: blatt.png used on input line 333.
+Package pdftex.def Info: blatt.png used on input line 337.
 (pdftex.def)             Requested size: 150.96132pt x 96.35829pt.
-
-<rod_fokus.png, id=200, 754.82pt x 481.8pt>
+ [4 <./spekter.png (PNG copy)>] <rod_fokus.png, id=218, 754.82pt x 481.8pt>
 File: rod_fokus.png Graphic file (type png)
  <use rod_fokus.png>
-Package pdftex.def Info: rod_fokus.png used on input line 339.
+Package pdftex.def Info: rod_fokus.png used on input line 343.
 (pdftex.def)             Requested size: 150.96132pt x 96.35829pt.
- [4 <./spekter.png (PNG copy)>] <gront_fokus.png, id=207, 754.82pt x 481.8pt>
-File: gront_fokus.png Graphic file (type png)
 
-<use gront_fokus.png>
-Package pdftex.def Info: gront_fokus.png used on input line 346.
+<gront_fokus.png, id=219, 754.82pt x 481.8pt>
+File: gront_fokus.png Graphic file (type png)
+ <use gront_fokus.png>
+Package pdftex.def Info: gront_fokus.png used on input line 350.
 (pdftex.def)             Requested size: 150.96132pt x 96.35829pt.
- <red_filter_green_focus.png, id=208, 754.82pt x 481.8pt>
+
+<red_filter_green_focus.png, id=220, 754.82pt x 481.8pt>
 File: red_filter_green_focus.png Graphic file (type png)
 
 <use red_filter_green_focus.png>
-Package pdftex.def Info: red_filter_green_focus.png used on input line 355.
+Package pdftex.def Info: red_filter_green_focus.png used on input line 359.
 (pdftex.def)             Requested size: 150.96132pt x 96.35829pt.
 
-<blueDist.png, id=210, 462.528pt x 345.4506pt>
+<blueDist.png, id=222, 462.528pt x 345.4506pt>
 File: blueDist.png Graphic file (type png)
  <use blueDist.png>
-Package pdftex.def Info: blueDist.png used on input line 366.
+Package pdftex.def Info: blueDist.png used on input line 370.
 (pdftex.def)             Requested size: 138.75946pt x 103.63597pt.
 
-<redDist.png, id=212, 462.528pt x 345.4506pt>
+<redDist.png, id=224, 462.528pt x 345.4506pt>
 File: redDist.png Graphic file (type png)
  <use redDist.png>
-Package pdftex.def Info: redDist.png used on input line 373.
+Package pdftex.def Info: redDist.png used on input line 377.
 (pdftex.def)             Requested size: 138.75946pt x 103.63597pt.
 
-<greenDist.png, id=213, 462.528pt x 345.4506pt>
+<greenDist.png, id=225, 462.528pt x 345.4506pt>
 File: greenDist.png Graphic file (type png)
  <use greenDist.png>
-Package pdftex.def Info: greenDist.png used on input line 380.
+Package pdftex.def Info: greenDist.png used on input line 384.
 (pdftex.def)             Requested size: 138.75946pt x 103.63597pt.
 
-<slice.png, id=214, 462.528pt x 345.4506pt>
-File: slice.png Graphic file (type png)
- <use slice.png>
-Package pdftex.def Info: slice.png used on input line 409.
-(pdftex.def)             Requested size: 138.75946pt x 103.63597pt.
+<df_max_exp.png, id=226, 754.82pt x 481.8pt>
+File: df_max_exp.png Graphic file (type png)
+ <use df_max_exp.png>
+Package pdftex.def Info: df_max_exp.png used on input line 412.
+(pdftex.def)             Requested size: 150.96132pt x 96.35829pt.
  [5 <./blatt.png (PNG copy)> <./rod_fokus.png (PNG copy)> <./gront_fokus.png (P
 NG copy)> <./red_filter_green_focus.png (PNG copy)> <./blueDist.png> <./redDist
-.png> <./greenDist.png>] (./daniel_heinesen_lab2.bbl) [6 <./slice.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 441.
+.png> <./greenDist.png>] <bf1.png, id=242, 754.82pt x 481.8pt>
+File: bf1.png Graphic file (type png)
+ <use bf1.png>
+Package pdftex.def Info: bf1.png used on input line 419.
+(pdftex.def)             Requested size: 150.96132pt x 96.35829pt.
+
+<histDark.png, id=243, 462.528pt x 345.4506pt>
+File: histDark.png Graphic file (type png)
+ <use histDark.png>
+Package pdftex.def Info: histDark.png used on input line 443.
+(pdftex.def)             Requested size: 185.0079pt x 138.17778pt.
+
+<histBias.png, id=244, 462.528pt x 345.4506pt>
+File: histBias.png Graphic file (type png)
+ <use histBias.png>
+Package pdftex.def Info: histBias.png used on input line 451.
+(pdftex.def)             Requested size: 185.0079pt x 138.17778pt.
+
+<3_1.png, id=245, 754.82pt x 481.8pt>
+File: 3_1.png Graphic file (type png)
+ <use 3_1.png>
+Package pdftex.def Info: 3_1.png used on input line 493.
+(pdftex.def)             Requested size: 150.96132pt x 96.35829pt.
+
+<slice.png, id=246, 462.528pt x 345.4506pt>
+File: slice.png Graphic file (type png)
+ <use slice.png>
+Package pdftex.def Info: slice.png used on input line 502.
+(pdftex.def)             Requested size: 138.75946pt x 103.63597pt.
+ [6 <./df_max_exp.png (PNG copy)> <./bf1.png (PNG copy)> <./histDark.png> <./hi
+stBias.png> <./3_1.png (PNG copy)>] <3_2.png, id=265, 754.82pt x 481.8pt>
+File: 3_2.png Graphic file (type png)
+ <use 3_2.png>
+Package pdftex.def Info: 3_2.png used on input line 528.
+(pdftex.def)             Requested size: 150.96132pt x 96.35829pt.
+
+<corrected_image.png, id=266, 301.125pt x 301.125pt>
+File: corrected_image.png Graphic file (type png)
+ <use corrected_image.png>
+Package pdftex.def Info: corrected_image.png used on input line 539.
+(pdftex.def)             Requested size: 90.33818pt x 90.33818pt.
+
+<corrected_image_fov.png, id=267, 754.82pt x 481.8pt>
+File: corrected_image_fov.png Graphic file (type png)
+
+<use corrected_image_fov.png>
+Package pdftex.def Info: corrected_image_fov.png used on input line 546.
+(pdftex.def)             Requested size: 150.96132pt x 96.35829pt.
+ (./daniel_heinesen_lab2.bbl) [7 <./slice.png> <./3_2.png (PNG copy)> <./correc
+ted_image.png (PNG copy)> <./corrected_image_fov.png (PNG copy)>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 562.
  (./daniel_heinesen_lab2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 441.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 441.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 562.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 562.
 Package rerunfilecheck Info: File `daniel_heinesen_lab2.out' has not changed.
-(rerunfilecheck)             Checksum: CB8DED6B9CE2BE68623DEA6E56AC2933;2087.
+(rerunfilecheck)             Checksum: 64E72255A8BB38CBDF13CD6431BA7976;2176.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 8944 strings out of 493013
- 122886 string characters out of 6136994
- 239518 words of memory out of 5000000
- 12280 multiletter control sequences out of 15000+600000
+ 9010 strings out of 493013
+ 123842 string characters out of 6136994
+ 240403 words of memory out of 5000000
+ 12323 multiletter control sequences out of 15000+600000
  11221 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  35i,7n,30p,718b,385s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -967,20 +1019,20 @@ live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/201
 6/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2016/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><c:/texlive/2016/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2016/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr5.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.p
-fb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texl
-ive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2016/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2016/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2016/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmti10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmti8.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb
->
-Output written on daniel_heinesen_lab2.pdf (6 pages, 1341937 bytes).
+ic/amsfonts/cm/cmmi8.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.
+pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/tex
+live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2016/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2016/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2016/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmsy10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmsy7.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmti10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb
+><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb>
+Output written on daniel_heinesen_lab2.pdf (7 pages, 2122292 bytes).
 PDF statistics:
- 310 PDF objects out of 1000 (max. 8388607)
- 270 compressed objects within 3 object streams
- 74 named destinations out of 1000 (max. 500000)
- 286 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 356 PDF objects out of 1000 (max. 8388607)
+ 303 compressed objects within 4 object streams
+ 89 named destinations out of 1000 (max. 500000)
+ 334 words of extra memory for PDF output out of 10000 (max. 10000000)
 

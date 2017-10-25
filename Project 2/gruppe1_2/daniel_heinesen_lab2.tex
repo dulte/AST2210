@@ -70,6 +70,7 @@ After the electrons reach the conduction they are lead to a register, who counts
 
 
 \subsection{Finding the Pixel Size}
+\label{sec:pixSize}
 To find the pixel size we used a slit to make a diffraction pattern on the screen. We can so use the single-slit diffraction pattern
 
 \begin{equation}
@@ -204,7 +205,7 @@ g = \frac{F_{electrons}}{\sigma_{electrons}} = \frac{(\bar{F}_1 - \bar{F}_2) + (
 \label{eq:g}
 \end{equation}
 
-Where $F_i$ is a flat frame and $B_i$ is the corresponding bias frame. The second expression comes from the fact that we use the bias frames to clean the flat frames before finding $g$. We can now find the readout noise as
+Where $F_i$ is a flat frame and $B_i$ is the corresponding bias frame. The second expression comes from the fact that we use the bias frames to clean the flat frames before finding $g$. This conversion factor measures how many electrons which are needed to generate the signal. We can now find the readout noise as
 
 \begin{equation}
 \text{R.O.N} = g\cdot\sigma_{bias}
@@ -245,7 +246,10 @@ Filters to filter out some of the colors in the white light was placed in front 
 
 The white light was now switched out with a monochromatic red laser with wavelength $\lambda = (641 \pm 12.3)$ nm \emph{REF MY SELF}. To ensure that the laser didn't destroy the CCD, a damping filter was placed in front laser. Then a single slit with a width if $a = 100\mu m$ is placed in front of the laser the laser. The diffracted laser light was then captured by a monochromatic CCD\footnote{A monochromatic Edmund Optics USB camera}. 
 
-The camera and slit was then adjusted until a sharp diffraction pattern appeared in the middle of the computer screen. The distance from the slit to the CCD was so measured carefully with a ruler. An image of the diffraction pattern was then taken. To clean the picture the following series of pictures were taken \ref{sec:cleaning}. All of the apparatuses were removed, and for all of the pictures except the flat frames (see below) the dust cover was placed on the camera: \\
+The camera and slit was then adjusted until a sharp diffraction pattern appeared in the middle of the computer screen. The distance from the slit to the CCD was so measured carefully with a ruler. Two images image of the diffraction pattern were then taken. One with lower exposer used to calculate the pixel size, described here \ref{sec:pixSize}. The other one, with higher exposer, was used to test out the cleaning procedure \ref{sec:cleaning}.
+
+
+To clean the picture the following series of pictures were taken \ref{sec:cleaning}. All of the apparatuses were removed, and for all of the pictures except the flat frames (see below) the dust cover was placed on the camera: \\
 
 
 \begin{itemize}
@@ -292,7 +296,7 @@ With a clean image of the diffraction pattern, the values of the middle of the i
 
 \subsubsection{Color Camera and White Light and Lens}
 \label{sec:uncWhiteLight}
-To get a sharp diffraction pattern, the lens, objective and CCD has to be normal to the direction of the path of the light. If the lens is off the normal, we will get a coma, and due to the chromatic aberration in the lens (even thou it is thin, it has a physical thickness) the coma will be enhanced, leading to a smear out of colors(as seen here \emph{REF PIC}). This means that it might be difficult to get a sharp pattern, and the Airy disk might be larger then expected due to this coma, unless the lens is completely normal to the light(fortunately we are not measuring the Airy disk, so this uncertainty is only a curiosity).
+To get a sharp diffraction pattern, the lens, objective and CCD has to be normal to the direction of the path of the light. If the lens is off the normal, we will get a coma, and due to the chromatic aberration in the lens (even thou it is thin, it has a physical thickness) the coma will be enhanced, leading to a smear out of colors(as seen here \ref{img:spekter}). This means that it might be difficult to get a sharp pattern, and the Airy disk might be larger then expected due to this coma, unless the lens is completely normal to the light(fortunately we are not measuring the Airy disk, so this uncertainty is only a curiosity).
 
 When looking at the pixel counts for the different colors, we wanted to look at the pixel count when green dominated. But since green is a mix of blue and yellow, the blue is quite high when ever green is high. So there is quite a small range where green dominates all other colors, including blue. This range was difficult to find by only moving the camera back and forth, so the resulting image does not show very good results.
 
@@ -300,8 +304,8 @@ When looking at the pixel counts for the different colors, we wanted to look at 
 \label{sec:uncSlit}
 
 Much like with the white light and lens, the quality of the diffraction pattern is dependent on the single slit, objective and CCD being normal to the laser. This was adjusted as best as possible to make this uncertainty as low as possible.
-The slit has imperfections in its construction, making the diffraction pattern very uneven, instead of the straight lines we ideally want to see \emph{REF IMAGE}.
-The dominating source of error in our calculations of the pixel size came from the way the number of pixels to the first minimum was found: as one can see in the image of the diffraction pattern \emph{REF IMAGE} is tilted at an angle, while the plotted slice of the image \emph{REF PLOT} is take horizontally, meaning that the measured distance to the minimum is larger than the actual distance.
+The slit has imperfections in its construction, making the diffraction pattern very uneven, instead of the straight lines we ideally want to see \ref{img:rawPixSize}.
+The dominating source of error in our calculations of the pixel size came from the way the number of pixels to the first minimum was found: as one can see in the image of the diffraction pattern \ref{img:rawPixSize} is tilted at an angle, while the plotted slice of the image \ref{img:slice} is take horizontally, meaning that the measured distance to the minimum is larger than the actual distance.
 All of these uncertainties has been encompassed by a large, but fair uncertainty of $\pm 5$ pixels. 
 
 The distance from the slit to the camera was measured with a ruler. There was difficulty measuring this distance due to both the exact position of the slit and that of the CCD chip being obscured by their respective casings. So an uncertainty of $\pm 0.2$ cm was added.\\
@@ -397,18 +401,112 @@ Green & $211$ & $255$ & $255$
 \end{table}
 
 
+
+
 \subsection{Monochromatic Camera and Single Slit}
+
+We started by looking at one bias and the dark frame for the maximum exposer.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{df_max_exp.png}
+\caption{Image of dark frame for maximum exposer.}
+\label{img:df_max}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{bf1.png}
+\caption{Image of a bias frame.}
+\label{img:bf1}
+\end{figure}
+
+As we can see there are more or less the same. Lets look at some data about them:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|c}
+ & Bias & Dark Frame \\
+ \hline
+ Max & 15 & 75 \\
+ Min &6 & 4\\
+ Max Location & $(439, 427)$ & $(214, 478)$\\
+ Min Location & $(35, 528)$ & $(441, 84)$
+\end{tabular}
+\caption{Data about the bias and dark frame.}
+\end{table}
+
+The distribution of pixel values for the two are given as
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{histDark.png}
+\caption{The distribution for the pixel values for the dark frame.}
+\label{img:darkHist}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{histBias.png}
+\caption{The distribution for the pixel values for the bias frame.}
+\label{img:biasHist}
+\end{figure}
+
+For the analysis of the bias frames and two flat frames, the following data was obtained:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|c}
+  & Bias & Flat Field \\
+  \hline
+Mean of sum & 17.99 & 141.80\\
+Noise & 95.43 & 122.39
+\end{tabular}
+\caption{Data for the central regions of the bias frames, and the second and forth flat frames.}
+\end{table}
+
+
+From the same bias and flat frames (flat frame 2 and 4) $g$ could be found as
+
+\begin{equation}
+g = 0.0210840557684  \text{ [electrons/ADU]}
+\label{eq:gVal}
+\end{equation}
+
+And from a single bias frame the readout noise could be found
+
+\begin{equation}
+\text{R.O.N} = g\cdot\sigma_{bias} = 0.0210840557684\cdot0.592650538616 
+\end{equation}
+\begin{equation}
+= 0.0124954770073 \approx 0.0125
+\end{equation}
+
+
+Using all of the 16 flat frames, and seeing what this did to the noise, we got:
+
 
 
 \subsubsection{Pixel Size}
+\label{sec:resPixSize}
 
-Having the cleaned picture \emph{REF PIC}, we can get the slice of the center to find the distance to the minimum
+The image taken for this calculation was as follows:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{3_1.png}
+\caption{Image of the diffraction pattern with low exposer, used to find the pixel size.}
+\label{img:rawPixSize}
+\end{figure}
+
+The middle slice of the image gave the following pixel values:
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.3]{slice.png}
 \caption{A slice of the middle of the cleaned image of the diffraction pattern.}
-\label{img:green}
+\label{img:slice}
 \end{figure}
 
 If we look at the plot there are about 200 pixels from minimum to minimum, meaning that there are about $100$ pixels from the center to the first minimum. We discussed the uncertainty of the distance in pixels in sec. \ref{sec:uncSlit}. So adding that we get that
@@ -420,12 +518,40 @@ n_{pixels} = 100\pm 5
 We can then use \eqref{eq:pixelSize} to find the size of the pixels. We use that $m = 1$, $\lambda (641 \pm 12.3)$ nm \emph{REF MYSELF}, $a = 100 \mu m$ and $d = (8.5 \pm 0.2)$ cm:
 
 \begin{equation}
-c =  \frac{(641 \pm 12.3) \text{ nm} (8.5 \pm 0.2) \text{ cm}}{100\pm 5 \cdot100 \mu m}
+c =  \frac{(641 \pm 12.3) \text{ nm} (8.5 \pm 0.2) \text{ cm}}{100\pm 5 \cdot100 \mu m} = (5.45 \pm 0.32)\text{ }\mu\text{m}
 \end{equation}
 
+So the size of one pixel of the CCD is $(5.45 \pm 0.32)\text{ }\mu\text{m}$.
 
 
+\subsubsection{Cleaning the Scientific Image}
 
+The raw of the diffraction pattern with slightly higher exposer was
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{3_2.png}
+\caption{Image of the diffraction pattern, used to test the cleaning procedure.}
+\label{img:rawClean}
+\end{figure}
+
+If we look close at the image one can see small circles. This is due to light diffracting of tiny dust particles somewhere on the instruments. This is some of the things we ideally want to remove with the flat fields.
+
+After applying the cleaning procedure on the image we got the following result:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{corrected_image.png}
+\caption{A slice of the middle of the cleaned image of the diffraction pattern.}
+\label{img:slice}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{corrected_image_fov.png}
+\caption{A slice of the middle of the cleaned image of the diffraction pattern.}
+\label{img:slice}
+\end{figure}
 
 
 
