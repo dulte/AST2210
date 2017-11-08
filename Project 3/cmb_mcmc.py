@@ -74,6 +74,7 @@ if __name__ == "__main__":
     n_values = np.zeros_like(lnL)
     Q_values[0] = Q_guess
     n_values[0] = n_guess
+    print len(Q_values),len(n_values)
     
     lnL[0] = calc_lnL(Q_guess,n_guess)
     
@@ -101,9 +102,9 @@ if __name__ == "__main__":
         
         temp_lnL = calc_lnL(new_q,new_n)   
 
-        diff = temp_lnL+lnL[i-1]
+        diff = temp_lnL-lnL[i-1]
         
-        if diff >= 1:
+        if diff >= 0:
             trow_out_prob = 1
         else:
             trow_out_prob = np.exp(diff)
@@ -113,8 +114,12 @@ if __name__ == "__main__":
         
         if dice[i] <= trow_out_prob:
             lnL[i] = temp_lnL
+            Q_values[i] = new_q
+            n_values[i] = new_n
         else:
             lnL[i] = lnL[i-1]
+            Q_values[i] = Q_values[i-1]
+            n_values[i] = n_values[i-1]
 
         bar.next()
 

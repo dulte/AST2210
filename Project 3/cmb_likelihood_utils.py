@@ -114,7 +114,7 @@ def get_signal_cov(C_ell, beam, pixwin, p_ell_ij):
     lmax = len(C_ell) - 1
     ell = np.arange(lmax+1)
     # 1: Compute all the elements of the sum over ell, as arrays
-    sum_over_ell = np.sum((2*ell + 1)*(beam*pixwin)**2*C_ell)
+#    sum_over_ell = np.sum((2*ell + 1)*(beam*pixwin)**2*C_ell)
         
 
     # 2: Assemble a single array with all the ell terms which are independent of (i,j)
@@ -122,7 +122,11 @@ def get_signal_cov(C_ell, beam, pixwin, p_ell_ij):
 
     # 3: Compute the covariance matrix by an appropriate inner product
     
-    S_cov = sum_over_ell*np.sum(p_ell_ij,axis=2)
+#    S_cov = sum_over_ell*np.sum(p_ell_ij,axis=2)
+    ell_dep_array = (2*ell + 1)*(beam*pixwin)**2*C_ell#np.array([((2*ell + 1)*(beam*pixwin)**2*C_ell),]*(p_ell_ij.shape[1]))
+  
+    S_cov = np.einsum('ijl,...l->ij',p_ell_ij,ell_dep_array)
+    
 
     
     return S_cov/(4.*np.pi)
@@ -145,19 +149,18 @@ def get_lnL(data, cov):
 
     # 2: Compute log(det(C)) from L
     #logdet = 2*np.linalg.slogdet(L)[1]#2*np.trace(np.log(L))
-    logdet = 2*np.trace(np.log(L))
+    logdet = 2*np.sum(np.diag((np.log(L))))
     # 3: Solve for L^-1 d using scipy.linalg.solve_triangular 
     x = spl.solve_triangular(L,data,lower=True)
 
     # 4: Assemble -2*lnL using the components just computed
-    C_inv = np.dot(x.T,x)
+    chi_sq = np.dot(x.T,x)
     
-    if not -1e3<chi_sq<8e4:
+    if not 0<chi_sq<1e4:
         print "There may be something wrong, got chi value of %g" %chi_sq
     
 
     result = -0.5*(chi_sq + logdet)
     return result
-
 
 
