@@ -17,8 +17,8 @@ n_max      =   3.
 n_numpoint =  40
 
 # Markoc Chain Mote Carlo parameters
-metropolis_iterations = 1e7
-Q_guess = 3#(q_max-q_min)/2.
+metropolis_iterations = 1e3
+Q_guess = 1#(q_max-q_min)/2.
 n_guess = -1#(n_max- n_min)/2.
 Q_step = (q_max - q_min)/float(q_numpoint)
 n_step = (n_max - n_min)/float(n_numpoint)

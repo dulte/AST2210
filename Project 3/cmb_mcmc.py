@@ -9,6 +9,7 @@ import numpy as np
 import scipy.linalg as spl
 import sys, os, timeit
 import cmb_likelihood_utils as utils
+from numba import jit
 
 
 if __name__ == "__main__":
@@ -58,6 +59,9 @@ if __name__ == "__main__":
 
     # Finished precomputation
     # ---------------------------------------
+
+    # Setup for the metropolis
+    # ---------------------------------------
     
     def calc_lnL(Q,n):
         Cl_model = utils.get_C_ell_model(Q,n,lmax)
@@ -65,7 +69,7 @@ if __name__ == "__main__":
         cov = S_cov + N_cov + F_cov
         return utils.get_lnL(cmb,cov)
 
-    lnL = np.zeros(metropolis_iterations)
+    lnL = np.zeros(int(metropolis_iterations))
     Q_values = np.zeros_like(lnL)
     n_values = np.zeros_like(lnL)
     Q_values[0] = Q_guess
@@ -74,33 +78,47 @@ if __name__ == "__main__":
     lnL[0] = calc_lnL(Q_guess,n_guess)
     
     time_start = timeit.default_timer()
+
+    q_rand = np.random.normal(size=int(metropolis_iterations))
+    n_rand = np.random.normal(size=int(metropolis_iterations))
+
+    dice = np.random.uniform(size=int(metropolis_iterations))
+
     print "Starting Metropolis"
+    from progress.bar import Bar
+    bar = Bar('Processing', max=int(metropolis_iterations))
 
  
     for i in range(1,int(metropolis_iterations)):
-        if i == 1e3:
+        if i == 1e2:
             time_end = timeit.default_timer()
-            time_to_end = (time_end-time_start)*metropolis_iterations*1e-3 
-            print "Sorry this is going to take %g sec" %(time_to_end)
+            time_to_end = (time_end-time_start)*metropolis_iterations*1e-2 
+            print "\nSorry this is going to take %g sec\n" %(time_to_end)
             
-        q_rand = np.random.normal()
-        n_rand = np.random.normal()
         
-        dice = np.random.uniform()
+        new_q = Q_values[i-1] + Q_step*q_rand[i]
+        new_n = n_values[i-1] + n_step*n_rand[i]
         
-        new_q = Q_values[i-1] + Q_step*q_rand
-        new_n = n_values[i-1] + n_step*n_rand
+        temp_lnL = calc_lnL(new_q,new_n)   
+
+        diff = temp_lnL+lnL[i-1]
         
-        temp_lnL = calc_lnL(new_q,new_n)       
-        print temp_lnL,lnL[0]
+        if diff >= 1:
+            trow_out_prob = 1
+        else:
+            trow_out_prob = np.exp(diff)
+
+        # trow_out_prob = np.min(1.,np.exp(potens))
         
-        trow_out_prob = np.min(1,np.exp(temp_lnL - lnL[i-1]))
         
-        
-        if dice <= trow_out_prob:
+        if dice[i] <= trow_out_prob:
             lnL[i] = temp_lnL
         else:
             lnL[i] = lnL[i-1]
+
+        bar.next()
+
+    bar.finish()
     
     # Saving full likelihood in numpy array format. This is faster and easier
     # to read in later, for visualization

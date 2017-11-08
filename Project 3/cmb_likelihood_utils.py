@@ -21,7 +21,9 @@
 import numpy as np
 from scipy.special import legendre
 import scipy.linalg as spl
+from numba import jit, njit
 
+@jit(nopython = True)
 def get_noise_cov(rms):
     """
     To be completed:
@@ -31,7 +33,7 @@ def get_noise_cov(rms):
     N_cov = np.diag(rms**2)
     return N_cov
 
-
+@jit(nopython = True)
 def get_foreground_cov(x,y,z):
     """
     Computing the foreground template covariance matrix, to marginalize over
@@ -46,7 +48,7 @@ def get_foreground_cov(x,y,z):
     monopole = np.ones((len(x),len(x)))
     dipole = np.outer(x,x) + np.outer(y,y) + np.outer(z,z)
     return large_value * (monopole + dipole)
-
+@jit(nopython = True)
 def get_C_ell_model(Q,n,lmax):
     """
     To be completed:
@@ -62,8 +64,9 @@ def get_C_ell_model(Q,n,lmax):
     # 3: Compute multipoles 3 through lmax recursively
     for l in range(3,lmax+1):
         C_ell[l] = C_ell[l-1]*(2*l + n-1)/(2*l+5-n)
-    print C_ell
+    
     return C_ell
+
 
 def get_legendre_coeff(lmax):
     '''
@@ -78,7 +81,6 @@ def get_legendre_coeff(lmax):
         leg.append(legendre(l))
 
     return leg
-
 
 def get_legendre_mat(lmax,x,y,z):
     '''
@@ -112,13 +114,7 @@ def get_signal_cov(C_ell, beam, pixwin, p_ell_ij):
     lmax = len(C_ell) - 1
     ell = np.arange(lmax+1)
     # 1: Compute all the elements of the sum over ell, as arrays
-#    sum_over_ell = np.sum((2*ell + 1)*(beam*pixwin)**2*C_ell)
-#    print sum_over_ell
-    S_cov = np.zeros_like(p_ell_ij[:,:,0])
-    
-    for i,j in zip(range(p_ell_ij.shape[0]),range(p_ell_ij.shape[1])):
-        for l in range(lmax+1):
-            S_cov[i,j] += (2*l + 1)*(beam[l]*pixwin[l])**2*C_ell[l]*p_ell_ij[i,j,l] 
+    sum_over_ell = np.sum((2*ell + 1)*(beam*pixwin)**2*C_ell)
         
 
     # 2: Assemble a single array with all the ell terms which are independent of (i,j)
@@ -126,8 +122,9 @@ def get_signal_cov(C_ell, beam, pixwin, p_ell_ij):
 
     # 3: Compute the covariance matrix by an appropriate inner product
     
-#    S_cov = sum_over_ell*np.sum(p_ell_ij,axis=2)
+    S_cov = sum_over_ell*np.sum(p_ell_ij,axis=2)
 
+    
     return S_cov/(4.*np.pi)
 
 def get_lnL(data, cov):
@@ -143,22 +140,22 @@ def get_lnL(data, cov):
     '''
 
     # 1: Cholesky-decompose C into a lower triangular matrix L, using scipy.linalg.cholesky
-    L = spl.cholesky(cov)
+    L = spl.cholesky(cov,lower=True)
     
 
     # 2: Compute log(det(C)) from L
-    logdet = np.log(spl.det(L)**2)
-
+    #logdet = 2*np.linalg.slogdet(L)[1]#2*np.trace(np.log(L))
+    logdet = 2*np.trace(np.log(L))
     # 3: Solve for L^-1 d using scipy.linalg.solve_triangular 
-    x = spl.solve_triangular(L,np.identity(L.shape[0]))
+    x = spl.solve_triangular(L,data,lower=True)
 
     # 4: Assemble -2*lnL using the components just computed
-    C_inv = np.dot(np.transpose(x),x)
-    chi_sq = np.dot(np.transpose(data),np.dot(C_inv,data))
+    C_inv = np.dot(x.T,x)
     
     if not -1e3<chi_sq<8e4:
         print "There may be something wrong, got chi value of %g" %chi_sq
-        
+    
+
     result = -0.5*(chi_sq + logdet)
     return result
 
