@@ -149,7 +149,7 @@ def get_lnL(data, cov):
 
     # 2: Compute log(det(C)) from L
     #logdet = 2*np.linalg.slogdet(L)[1]#2*np.trace(np.log(L))
-    logdet = 2*np.sum(np.diag((np.log(L))))
+    logdet = 2*np.sum(np.log(np.diag((L))))
     # 3: Solve for L^-1 d using scipy.linalg.solve_triangular 
     x = spl.solve_triangular(L,data,lower=True)
 
