@@ -126,7 +126,7 @@ def get_signal_cov(C_ell, beam, pixwin, p_ell_ij):
     ell_dep_array = (2*ell + 1)*(beam*pixwin)**2*C_ell#np.array([((2*ell + 1)*(beam*pixwin)**2*C_ell),]*(p_ell_ij.shape[1]))
   
     S_cov = np.einsum('ijl,...l->ij',p_ell_ij,ell_dep_array)
-    
+    #S_cov = np.inner(p_ell_ij,ell_dep_array)
 
     
     return S_cov/(4.*np.pi)
