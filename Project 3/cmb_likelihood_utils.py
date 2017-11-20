@@ -125,8 +125,9 @@ def get_signal_cov(C_ell, beam, pixwin, p_ell_ij):
 #    S_cov = sum_over_ell*np.sum(p_ell_ij,axis=2)
     ell_dep_array = (2*ell + 1)*(beam*pixwin)**2*C_ell#np.array([((2*ell + 1)*(beam*pixwin)**2*C_ell),]*(p_ell_ij.shape[1]))
   
-    S_cov = np.einsum('ijl,...l->ij',p_ell_ij,ell_dep_array)
-    #S_cov = np.inner(p_ell_ij,ell_dep_array)
+    #S_cov = np.einsum('ijl,...l->ij',p_ell_ij,ell_dep_array)
+    S_cov = np.inner(p_ell_ij,ell_dep_array)
+    
 
     
     return S_cov/(4.*np.pi)
@@ -149,7 +150,7 @@ def get_lnL(data, cov):
 
     # 2: Compute log(det(C)) from L
     #logdet = 2*np.linalg.slogdet(L)[1]#2*np.trace(np.log(L))
-    logdet = 2*np.sum(np.log(np.diag((L))))
+    logdet = 2*np.sum(np.log((np.diag(L))))
     # 3: Solve for L^-1 d using scipy.linalg.solve_triangular 
     x = spl.solve_triangular(L,data,lower=True)
 
@@ -160,7 +161,8 @@ def get_lnL(data, cov):
         print "There may be something wrong, got chi value of %g" %chi_sq
     
 
-    result = -0.5*(chi_sq + logdet)
+#    result = -0.5*(chi_sq + logdet)
+    result = (chi_sq + logdet)
     return result
 
 

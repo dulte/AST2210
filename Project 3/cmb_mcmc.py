@@ -67,14 +67,14 @@ if __name__ == "__main__":
         Cl_model = utils.get_C_ell_model(Q,n,lmax)
         S_cov = utils.get_signal_cov(Cl_model,beam,pixwin,p_ell_ij)
         cov = S_cov + N_cov + F_cov
-        return utils.get_lnL(cmb,cov)
+        return -0.5*utils.get_lnL(cmb,cov)
 
     lnL = np.zeros(int(metropolis_iterations))
     Q_values = np.zeros_like(lnL)
     n_values = np.zeros_like(lnL)
     Q_values[0] = Q_guess
     n_values[0] = n_guess
-    print len(Q_values),len(n_values)
+
     
     lnL[0] = calc_lnL(Q_guess,n_guess)
     
