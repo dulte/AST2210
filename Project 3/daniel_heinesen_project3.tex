@@ -32,7 +32,46 @@
 \section{Introduction}
 \label{sec:introduction}
 
+Since its discovery in 1964 \emph{REF} the Cosmic Microwave Background (CMB) radiation has been an important field of research in cosmology. The CMB is the red shifted remains of the photons made about 380 000 years after the Big Bang, when the plasma of the primordial universe had cold down enough to be transparent and light could escape. The CMB can now be observed as a $\sim 2.7$ K blanket of microwave radiation covering the whole sky. This radiation was at first shown to behave more or like a black body. In the 60's and 70's a theoretical basis for permutations in the primordial background radiation was found\emph{REF}, which would lead to a small fluctuation in the observable CMB(anisotropy) on the order
+\begin{equation}
+{\Delta T}/{T} \approx 10 \mu K.
+\end{equation}
+These fluctuations predicted to be both isotropic and Gaussian. This is a clear testable prediction of inflationary theory. 
 
+An other prediction of the inflationary model is that these fluctuations would be nearly the same across all scales, but not entirely the same. 
+
+The Cosmic Background Explorer (COBE) was mission launched in 1989 by NASA, and collected data to 1993. The satellite was launched with three onboard instruments: the "Far-InfraRed Absolute Spectrophotometer(FIRAS)", the "Diffuse InfraRed Background Experiment(DIRBE)" and the "Differential Microwave Radiometer(DMR)". The latter being of interest in this article.
+
+We are going to use the $53$ GHz and $90$ GHz maps from the COBE-DMR. We are going to use these maps to estimate the values of the fluctuations of the temperature of the CMB, given by the parameter $Q$; and these fluctuations dependence on scale, given by the parameter $n$.
+
+We are going to use a power-law model for the power spectrum \ref{sec:theory} to estimate a theoretical covariance matrix for data for the parameter $Q$ and $n$\eqref{eq:C(Q,n)}. We are then going apply Bayesian analysis to this covariance matrix calculate the posterior probability that this model is correct given the data obtained from COBE-DMR. We are then going to use a Markov Chain Monte Carlo simulation to optimize these parameters to find the best possible parameters $Q$ and $n$. 
+
+We are only going to look at fluctuations with modes with an effective wavelength\ref{sec:theory} of $\ell \leq 47$, since for these mode the fluctuations are a direct product of the inflation, and thus gives clear evidence for the model. Since COBE-DMR only measures the difference between points in the sky, there is a difficulty in measuring monopoles. It also faces problems with dipoles, since motions trough space causes red-shifts in monopoles, manifesting as dipoles; thus making observations of dipoles more likely to originate from this effect than from actual dipoles. Thus we are only looking at multipoles of order $2 \leq \ell \leq 47$.
+
+Should we be able to values for $Q$ and $n$ is line with the prediction of the inflationary model, this would be an important confirmation of the model, and would go a long way of cementing its role as the leading model of the expansion of the universe.
+
+
+\section{Background Theory}
+\label{sec:theory}
+
+The fluctuations in the CMB can be described with the multipole expansion
+
+\begin{equation}
+\Delta T(\hat{n}) = \sum_{\ell = 0}^{\ell_{max}}\sum_{m = -\ell}^\ell a_{\ell m}Y_{\ell m},
+\end{equation}
+where $a_{\ell m}$ is the amplitude of the different modes of the spherical harmonics $Y_{\ell m}$. $\ell$ is the effective wavelength $\ell = 180/\lambda$, and $m$ is the phase. From this we can find the power spectrum defined though the variance of $a_{\ell m}$
+
+\begin{equation}
+\langle a_{\ell m}a_{\ell'm'}\rangle = \delta_{\ell \ell '}\delta_{m m'}C_\ell.
+\end{equation}
+
+Where $C_\ell = |a_\ell|^2$ is the power spectrum. This is where our investigation starts. Inflationary theory predicts that in the areas mapped out by COBE-DMR, this power spectrum should follow power law of the form
+
+\begin{equation}
+P(k) \propto k^n,
+\end{equation}
+
+where $n$ should be a bit smaller than $1$. This makes it possible to parametrize the power spectrum with the parameters $Q$ and $n$, where $Q$ is the amplitudes of the fluctuations, and $n$ is the spectral index and describes the fluctuations dependence on the scale.
 
 
 %Discuss background, physical importance and possibly some history of
@@ -44,45 +83,45 @@ The method described here is a taken from \emph{REF OPPGAVETEKST}. For a more de
 \label{sec:method}
 
 \subsection{Data Model}
-CMB can be well approximated as a Gaussian distribution \emph{REF}
+The data from the COBE-DRM is on the form
+\begin{equation}
+d(\hat{n}) = s(\hat{n}) + f(\hat{n}) + n(\hat{n}),
+\end{equation}
+where $f$ is the foreground radiation, $n$ is the instrumental noise and $s$ is the actual signal from the CMB.
+
+As mentioned in the introduction, the fluctuations can be taken as Gaussian, so we can expect that the distribution of the real signal \emph{DOBBELSJEKK} in the data goes like
 \begin{equation}
 p(\mathbf{d}) = \frac{1}{\sqrt{|\mathbf{C}|}}e^{-\frac{1}{2}\mathbf{d}^T \mathbf{C}^{-1}\mathbf{d}}.
  \end{equation} 
 
-Here $\mathbf{d}$ is the observed data, and $\mathbf{C}$ the covariance matrix for the pixels in the CMB field.
-
-We are taking the observed CMB data $d(\hat{n})$ to be consisting of three parts
-\begin{equation}
-d(\hat{n}) = s(\hat{n}) + f(\hat{n}) + n(\hat{n}),
-\end{equation}
-where $f$ is the foreground radiation, $n$ is the noise and $s$ is the actual signal from the CMB. We assume that non of these are correlated, and we can therefore write the covariance matrix for the data $d$ as 
+Here $\mathbf{d}$ is the observed data, and $\mathbf{C}$ the covariance matrix for the pixels in the data. The covariance matrix is a quantity that describes how much the signal for each pixel is correlated to the others. The covariance matrix contains all the relevant information of the data we need. We expect that $s$,$f$ and $n$ is non-correlated, and we can therefore write the covariance matrix for the data $d$ as 
 \begin{equation}
 \mathbf{C} = \langle \mathbf{d}\mathbf{d}^T\rangle = \mathbf{S} + \mathbf{N} + \mathbf{F},
 \end{equation}
 where $\mathbf{S}$, $\mathbf{N}$ and $\mathbf{F}$ are the covariance matrices from $s$, $n$ and $f$ respectively. We so need to find expression for these matrices. 
 
-We start with the foreground. We want to marginalize over the the dipole and monopole so to not get any contributions from these. This is done with a map of the structures we want to ignore $\mathbf{f}$ and a large number $\lambda$:
+We'll start with the foreground. We want to marginalize over the the dipole and monopole so not to get any contributions from these. This is done with a map of the structures we want to ignore $\mathbf{f}$ and a large number $\lambda$:
 \begin{equation}
 \mathbf{F} = \lambda \mathbf{f}\mathbf{f}^T.
 \end{equation}
 
 This gives these regions near infinite variance, and is thus ignored.
 
-We do not expect the noise in the different pixels to be correlated to one another, so $N$ will be a diagonal matrix defined as
+We do not expect the instrumental noise in the different pixels to be correlated to one another, so $N$ will be a diagonal matrix defined as
 \begin{equation}
 \mathbf{N} = \langle n_i n_j\rangle = \sigma_i^2\delta_{ij}.
 \end{equation}
 
-The last part of the covariance matrix is the actual CMB: $\mathbf{S}$. \emph{REF} shows that this can be written as 
+The last part of the covariance matrix is the actual CMB signal: $\mathbf{S}$. \emph{REF} shows that this can be written as 
 \begin{equation}
 S_ij = \frac{1}{4\pi}\sum_{\ell=0}(2\ell + 1)(b_\ell p_\ell)^2 C_\ell P_\ell(\cos\theta_{ij}),
 \end{equation}
-where $b_\ell$ is the instrumental beam, $p_\ell$ is the pixel window \emph{REF EVT THEORY}, $P_\ell$ are Legendre polynomials and $\theta_{ij}$ is the angle between two pixels $i$ and $j$. $C_\ell$ refers to the power spectrum 
+where $b_\ell$ is the instrumental beam, $p_\ell$ is the pixel window \emph{REF DATA}, $P_\ell$ are Legendre polynomials and $\theta_{ij}$ is the angle between two pixels $i$ and $j$. The $(b_\ell p_\ell)^2$ is there to correct for the beam and the pixel window, and will be discussed more in the \textit{data} section \ref{sec:data}. $C_\ell$ refers to the power spectrum\ref{sec:theory} 
 \begin{equation}
 C_\ell = |a_\ell|^2.
 \end{equation}
 
-We use the power law model of the power spectrum given in \emph{REF}, with $P(k) \propto k^n$. In this model it can be shown that $C_\ell$ can be given as
+As mentioned in the theory section \ref{sec:theory} we use the power law model of the power spectrum predicted for the inflation model, with $P(k) \propto k^n$. In this model it can be shown\emph{REF} that $C_\ell$ can be given as
 \begin{equation}
 C_\ell = \frac{4\pi}{5}Q^2\frac{\Gamma\left(\ell + \frac{n-1}{2}\right)\Gamma\left(\frac{9-n}{2}\right)}{\Gamma\left(\ell + \frac{5-n}{2}\right)\Gamma\left(\frac{3+n}{2}\right)}.
 \end{equation}
@@ -94,10 +133,15 @@ C_{\ell + 1} = C_\ell \frac{2\ell + n -1}{2\ell + 5 - n}.
 
 Since we are not interested in the mono- and dipole we let $C_0 = C_1 = 0$, and for simplicity we let $C_2 = 4\pi/5Q^2$.
 
-We see that this model for the power spectrum is parametrized the amplitude $Q$ and the spectral index $n$. This also make the covariance matrix\emph{REF COV MAT} and the probability \emph{REF PROB} dependent on these parameters.
+We see that this model for the power spectrum is parametrized the amplitude $Q$ and the spectral index $n$. This also make the covariance matrix\emph{REF COV MAT} and the probability \emph{REF PROB} dependent on these parameters:
+
+\begin{equation}
+\mathbf{C}(Q,n) = \mathbf{S}(Q,n) + \mathbf{N} + \mathbf{F}.
+\label{eq:C(Q,n)}
+\end{equation}
 
 \subsection{Likelihood and Markov Chain Mote Carlo Methods}
-We are interested in finding the parameters $Q$ and $n$ which gives a power spectrum that represent the observed data. We are looking for the posterior probability
+We now have a modelled covariance matrix dependent on $Q$ and $n$. We are interested in finding the values $Q$ and $n$ which gives a power spectrum that represent the observed data. For this we look at the posterior probability
 \begin{equation}
 P(Q,n|\mathbf{d}) = \mathcal{L}(Q,n)P(Q,n),
 \end{equation}
@@ -105,27 +149,30 @@ where $P(Q,n)$ is an unknown prior probability \emph{DOUBLE CHECK} and $\mathcal
 \begin{equation}
 \mathcal{L}(Q,n) = p(\mathbf{d}|Q,n),
 \end{equation}
-where $p(\mathbf{d}|Q,m)$ is the conditional probability that we are going to we will observe our data $\mathbf{d}$ given the parameters $Q$ and $n$. Due to numerical limits of our numerical methods, we are not interested in $\mathcal{L}$ directly, but rather its logarithm, given as \emph{REF HANS-KRISTIAN}
+where $p(\mathbf{d}|Q,m)$ is the conditional probability that we will observe our data $\mathbf{d}$ given the parameters $Q$ and $n$. We want to maximize this quantity with respect to $Q$ and $n$ to get the best posterior probability.
+
+Due to numerical limits of our numerical methods, we are not interested in $\mathcal{L}$ directly, but rather its logarithm. From \emph{REF HANS-KRISTIAN} we get that this is given as
 \begin{equation}
 -2\log \mathcal{L}(Q,n) =  \mathbf{d}^T\mathbf{C}^{-1}\mathbf{d} + \log|\mathbf{C}|.
 \end{equation}
 
-To make everything more computationally faster, we do a Cholesky decomposition of the covariance matrix:
+So for the different values of $Q$ and $n$ we need to calculate $\log \mathcal{L}$, and since $\mathbf{C}$ is large matrix, this can be computationally heavy. To make everything more faster, we do a Cholesky decomposition of the covariance matrix:
 \begin{equation}
 \mathbf{C} = \mathbf{L}\mathbf{L}^T.
 \end{equation} 
  
-This makes the inversion easier
+This makes the inversion of $\mathbf{C}$ easier, since
 \begin{equation}
-\mathbf{d}^T\mathbf{C}^{-1}\mathbf{d} = \mathbf{x}^T\mathbf{x} \Leftrightarrow \mathbf{x} = \mathbf{L}^{-1}\mathbf{d},
+\mathbf{d}^T\mathbf{C}^{-1}\mathbf{d} = \mathbf{x}^T\mathbf{x} \Leftrightarrow \mathbf{x} = \mathbf{L}^{-1}\mathbf{d}.
 \end{equation}
 
-since solving the triangular matrix system $\mathbf{L}\mathbf{d} = \mathbf{x}$ is faster than inverting $\mathbf{C}$. The triangular matrix $\mathbf{L}$ also gives us the advantage at
+This is because solving the triangular matrix system $\mathbf{L}\mathbf{d} = \mathbf{x}$ is much faster than inverting $\mathbf{C}$ directly. The triangular matrix $\mathbf{L}$ also gives us the advantage at
 \begin{equation}
 \log|\mathbf{C}| = \log |\mathbf{L}\mathbf{L}^T| = 2\sum_i \log L_{ii}.
 \end{equation}
 
-To find this distribution \emph{REF DIST} we are using a Markov Chain Monte Carlo method, namely the Metropolis-Hastings algorithm \emph{REF BOOK}\footnote{To be more precise: Since the probability distribution is symmetric the Markov chain is reversible, our proposal distribution is thus the same backwards and forward, and the algorithm reduces to a normal Metropolis algorithm.}, with the acceptance probability
+
+With a effective method of finding $\log \mathcal{L}$ we need to maximize it, thus finding the best posterior probability. To do this we are using a Markov Chain Monte Carlo method, namely the Metropolis-Hastings algorithm \emph{REF BOOK}\footnote{To be more precise: Since the probability distribution is symmetric, the Markov chain is reversible. Our proposal distribution is thus the same backwards and forward, and the algorithm reduces to a normal Metropolis algorithm.}, with the acceptance probability
 \begin{equation}
 P(Q_i,n_i) = \min\left(1,e^{\mathcal{L}(Q_{i},n_{i})-\mathcal{L}(Q_{i-1},n_{i-1})}\right).
 \end{equation} 
@@ -136,7 +183,8 @@ P(Q_i,n_i) = e^{p}
 \end{equation}
 where
 \begin{equation}
-p = \min\left(0,\mathcal{L}(Q_{i},n_{i})-\mathcal{L}(Q_{i-1},n_{i-1})\right)
+p = \min\left(0,\mathcal{L}(Q_{i},n_{i})-\mathcal{L}(Q_{i-1},n_{i-1})\right).
+\label{eq:accProbExp}
 \end{equation}
 This is equivalent, but way safer numerically. With this acceptance probability we implement the algorithm
 
@@ -146,8 +194,8 @@ This is equivalent, but way safer numerically. With this acceptance probability 
 \item loop
     \begin{itemize}
      \item move $Q$ and $n$ a step length times a uniformly random number
-     \item calculate the acceptance probability \eqref{eq:AccProb}
-     \item draw a uniformly distributed number $\mathbf{x}$
+     \item calculate the acceptance probability: \eqref{eq:accProbExp} and \eqref{eq:AccProb}
+     \item draw a uniformly distributed number $\mathbf{x}\in[0,1]$
      \item if $\mathbf{x} < P(Q_i,n_i)$
      \begin{itemize}
      \item save $Q_i$ and $n_i$
@@ -159,7 +207,7 @@ This is equivalent, but way safer numerically. With this acceptance probability 
      \end{itemize}
 \end{itemize}
 
-This algorithm will randomly walk through the posterior probability, landing more often on the more likely $Q$'s and $n$'s, and will therefore quickly converge towards the most likely $Q$ and $n$.
+This algorithm will randomly walk through the posterior probability, landing more often on the $Q$'s and $n$'s with a higher probability, and will therefore quickly converge towards the most likely $Q$ and $n$.
 
 
 
@@ -173,7 +221,15 @@ This algorithm will randomly walk through the posterior probability, landing mor
 \section{Data}
 \label{sec:data}
 
-In this article data from the COBE satellite is used. We look at $53$ and $90$ GHZ map, since they gives the cleanest data. For the collection of the data a $7^{\circ}$ beam was used. The foreground was masked out, so not to contaminate the data with noise from stars and galactic dust. $\ell$ was used in an interval of $0$ to $47$. 
+In this article the $53$ and $90$ GHZ maps from the COBE-DMR were used. We used these maps since they gives the cleanest data, with the lowest noise levels. The original CMB data consisted of 3072 data points, but 1131 was masked out to remove foreground contamination, leaving us with 1941 usable data points.
+
+$\ell$ was used in an interval of $0$ to $47$. To remove mono- and dipole only $C_\ell \geq 2$ was given a given a non-zero value.
+
+COBE-DMR used a instrumental beam width of $7^\circ$, meaning that the signal get smeared out/convoluted by a Gaussian function with FWHM of $7^\circ$. Signals with wavelength smaller than this will get convoluted away, thus the data loses accuracy at this scale.\emph{DOBBELSJEKK}
+
+COBE-DMR also have a pixel window of $220'$ or $3.7^\circ$. Details smaller than this will not registered by the pixels and therefore lost instrument. This therefore have some of the same effects as the beam.
+
+The instrumental noise used in the calculation of the covariance matrix\eqref{eq:C(Q,n)} was supplied by the COBE mission, and thus not calculated by us.
 
 
 %Summarize properties of data. Which data are used (experiment,
