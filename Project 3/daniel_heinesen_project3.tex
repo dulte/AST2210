@@ -45,7 +45,7 @@ We are going to use the four year $53$ GHz and $90$ GHz maps from the COBE-DMR. 
 
 We are going to use a power-law model for the power spectrum \ref{sec:theory} to estimate a theoretical covariance matrix for data for the parameter $Q$ and $n$\eqref{eq:C(Q,n)}. We are then going apply Bayesian analysis to this covariance matrix calculate the posterior probability that this model is correct given the data obtained from COBE-DMR. We are then going to use a Markov Chain Monte Carlo simulation to optimize these parameters to find the best possible parameters $Q$ and $n$. 
 
-We are only going to look at fluctuations with modes with an effective wavelength\ref{sec:theory} of $\ell \leq 47$, since for these mode the fluctuations are a direct product of the inflation, and thus gives clear evidence for the model. Since COBE-DMR only measures the difference between points in the sky, there is a difficulty in measuring monopoles. It also faces problems with dipoles, since motions trough space causes red-shifts in monopoles, manifesting as dipoles; thus making observations of dipoles more likely to originate from this effect than from actual dipoles. Thus we are only looking at multipoles of order $2 \leq \ell \leq 47$.
+We are only going to look at fluctuations with modes with an effective wavelength\ref{sec:theory} of $\ell \leq 47$, since for these mode the fluctuations are a direct product of the inflation, and thus gives clear evidence for the model \citep{HKforelesning}. Since COBE-DMR only measures the difference between points in the sky, there is a difficulty in measuring monopoles. It also faces problems with dipoles, since motions trough space causes red-shifts in monopoles, manifesting as dipoles; thus making observations of dipoles more likely to originate from this effect than from actual dipoles. Thus we are only looking at multipoles of order $2 \leq \ell \leq 47$.
 
 Should we be able to values for $Q$ and $n$ is line with the prediction of the inflationary model, this would be an important confirmation of the model, and would go a long way of cementing its role as the leading model of the expansion of the universe.
 
@@ -64,7 +64,7 @@ where $a_{\ell m}$ is the amplitude of the different modes of the spherical harm
 \langle a_{\ell m}a_{\ell'm'}\rangle = \delta_{\ell \ell '}\delta_{m m'}C_\ell.
 \end{equation}
 
-Where $C_\ell = |a_\ell|^2$ is the power spectrum. This is where our investigation starts. Inflationary theory predicts that in the areas mapped out by COBE-DMR, this power spectrum should follow power law of the form
+Where $C_\ell = |a_\ell|^2/(2\ell + 1)$ is the power spectrum. This is where our investigation starts. Inflationary theory predicts that in the areas mapped out by COBE-DMR, this power spectrum should follow power law of the form
 
 \begin{equation}
 P(k) \propto k^n,
